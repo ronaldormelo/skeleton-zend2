@@ -1,0 +1,613 @@
+<?php
+if ($mensalidadeFoiPaga) {
+    ?>
+    <link href="/assets/compact-css/mc-network|rede|list.css" rel="stylesheet" />
+    <script src="/assets/compact-js/mc-network|rede|uni-level.js" type="text/javascript"></script>
+    <br />
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#mcnetwork-rede-tab" role="tab" data-toggle="tab">
+                Rede
+            </a>
+        </li>
+        <li>
+            <a href="#mcnetwork-unilevel-tab" role="tab" data-toggle="tab">
+                Uni-level
+            </a>
+        </li>
+        <li>
+            <a href="#mcnetwork-indicacao-tab" role="tab" data-toggle="tab">
+                Indicação
+            </a>
+        </li>        
+        <li>
+            <a href="#mcnetwork-pendentes-tab" role="tab" data-toggle="tab">
+                Pendentes
+            </a>
+        </li>        
+    </ul>
+
+    <div class="tab-content">
+
+        <div class="tab-pane active" id="mcnetwork-rede-tab">
+            <br>
+            <div class="row">
+                <div class="col-md-9">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <th colspan="1" class="file">
+                                    <span data-toggle="popover" data-trigger="focus" title="Você" data-content="">
+                                        <img src="/assets/img/user_ativo_pq.png" style="cursor: pointer;">
+                                    </span>
+                                </th>            
+                            </tr>
+                            <tr>
+                                <th class="empty">
+                        <table>
+                            <tbody>
+                                <?php
+                                $qtd1 = count($list1);
+                                $count1 = 0;
+
+                                foreach ($list1 as $contrato1) {
+
+                                    $count1++;
+
+                                    if ($qtd1 >= $configList['qtd_por_nivel']) {
+
+                                        if ($qtd1 == $count1) {
+
+                                            $class1 = 'end';
+                                            $class10 = 'empty';
+                                        } else {
+
+                                            $class1 = 'start';
+                                            $class10 = 'fill';
+                                        }
+                                    } else {
+
+                                        $class1 = 'start';
+                                        $class10 = 'fill';
+                                    }
+
+                                    $dateAdesao = new \DateTime($contrato1['dt_adesao']);
+                                    ?>
+                                    <tr>
+                                        <th colspan="1" class="<?= $class1 ?>">
+                                            <span
+                                                id="popover_<?= $contrato1['id_contratos_as_contratos']; ?>"   
+                                                data-toggle="popover"
+                                                title='<?= \Estrutura\Helpers\String::nomeMaiusculo($contrato1['nm_usuario']) . ' - "' . Estrutura\Helpers\Cript::encCod($contrato1['id_usuario']) . '"'; ?>' 
+                                                data-content="<?=
+                                                '<p>Nível: ' . $contrato1['id_nivel'] . '</p>'
+                                                . '<p>Situação: ' . $contrato1['nm_situacao_usuario'] . '</p>'
+                                                . '<p>Email: ' . $contrato1['em_email'] . '</p>'
+                                                . '<p>Telefone: ' . \Estrutura\Helpers\Telefone::telefoneMask($contrato1['nr_ddd_telefone'] . $contrato1['nr_telefone']) . '</p>'
+                                                . '<p>Data de adesão: ' . $dateAdesao->format('d/m/Y') . '</p>'
+                                                ?>">
+                                                    <?php
+                                                    if ($contrato1['id_situacao_usuario'] == $configList['situacao_usuario_ativo']) {
+                                                        ?>
+                                                    <img src="/assets/img/user_ativo_pq.png" style="cursor: pointer;">
+                                                    <?php
+                                                } else {
+                                                    ?>
+                                                    <img src="/assets/img/user_inativo_pq.png" style="cursor: pointer;">
+                                                    <?php
+                                                }
+                                                ?>
+                                            </span>
+                                        </th>
+                                    </tr>                        
+                                    <?php
+                                    $qtd2 = count($list2);
+
+                                    $count2 = 0;
+//                    if ($qtd2 > 0) {
+
+                                    $possuiFilho2 = 0;
+                                    foreach ($list2 as $contrato2) {
+
+                                        if ($contrato2['id_contrato_indicacao'] == $contrato1['id_contrato_filho']) {
+
+                                            $possuiFilho2++;
+//                                break;
+                                        }
+                                    }
+                                    ?>
+                                    <tr> 
+                                        <th class="<?= $class10 ?>" style="display: none;">
+                                <table>
+                                    <tbody>
+                                        <?php
+                                        if ($possuiFilho2) {
+                                            foreach ($list2 as $contrato2) {
+
+                                                if ($contrato2['id_contrato_indicacao'] == $contrato1['id_contrato_filho']) {
+
+                                                    $count2++;
+
+                                                    //                                            if ($configList['qtd_por_nivel'] == $count2) {
+                                                    if ($possuiFilho2 >= $configList['qtd_por_nivel']) {
+
+                                                        if ($possuiFilho2 == $count2) {
+
+                                                            $class2 = 'end';
+                                                            $class20 = 'empty';
+                                                        } else {
+
+                                                            $class2 = 'start';
+                                                            $class20 = 'fill';
+                                                        }
+                                                    } else {
+
+                                                        $class2 = 'start';
+                                                        $class20 = 'fill';
+                                                    }
+
+                                                    $dateAdesao = new \DateTime($contrato2['dt_adesao']);
+                                                    ?>
+                                                    <tr>
+                                                        <th colspan="1" class="<?= $class2 ?>">
+                                                            <span
+                                                                data-toggle="popover"
+                                                                title='<?= \Estrutura\Helpers\String::nomeMaiusculo($contrato2['nm_usuario']) . ' - "' . Estrutura\Helpers\Cript::encCod($contrato2['id_usuario']) . '"'; ?>' 
+                                                                data-content="<?=
+                                                                '<p>Nível: ' . $contrato2['id_nivel'] . "</p>"
+                                                                . '<p>Situação: ' . $contrato2['nm_situacao_usuario'] . '</p>'
+                                                                . '<p>Email: ' . $contrato2['em_email'] . '</p>'
+                                                                . '<p>Telefone: ' . \Estrutura\Helpers\Telefone::telefoneMask($contrato2['nr_ddd_telefone'] . $contrato2['nr_telefone']) . '</p>'
+                                                                . '<p>Data de adesão: ' . $dateAdesao->format('d/m/Y') . '</p>';
+                                                                ?>">
+                                                                    <?php
+                                                                    if ($contrato2['id_situacao_usuario'] == $configList['situacao_usuario_ativo']) {
+                                                                        ?>
+                                                                    <img src="/assets/img/user_ativo_pq.png" style="cursor: pointer;">
+                                                                    <?php
+                                                                } else {
+                                                                    ?>
+                                                                    <img src="/assets/img/user_inativo_pq.png" style="cursor: pointer;">
+                                                                    <?php
+                                                                }
+                                                                ?>
+                                                            </span>
+                                                        </th>
+                                                    </tr>     
+                                                    <?php
+                                                    $qtd3 = count($list3);
+                                                    $count3 = 0;
+
+//                                        if ($qtd3 > 0) {
+
+
+                                                    $possuiFilho3 = 0;
+                                                    foreach ($list3 as $contrato3) {
+
+                                                        if ($contrato3['id_contrato_indicacao'] == $contrato2['id_contrato_filho']) {
+
+                                                            $possuiFilho3++;
+//                                                    break;
+                                                        }
+                                                    }
+                                                    ?>
+                                                    <tr>
+                                                        <th class="<?= $class20; ?>" style="display: none;">
+                                                <table>
+                                                    <tbody>
+                                                        <?php
+                                                        if ($possuiFilho3) {
+                                                            foreach ($list3 as $contrato3) {
+
+                                                                if ($contrato3['id_contrato_indicacao'] == $contrato2['id_contrato_filho']) {
+
+                                                                    $count3++;
+
+                                                                    //                                                        if ($configList['qtd_por_nivel'] == $count3) {
+                                                                    if ($possuiFilho3 >= $configList['qtd_por_nivel']) {
+
+                                                                        if ($possuiFilho3 == $count3) {
+
+                                                                            $class3 = 'end';
+                                                                        } else {
+
+                                                                            $class3 = 'start';
+                                                                        }
+                                                                    } else {
+
+                                                                        $class3 = 'start';
+                                                                    }
+
+                                                                    $dateAdesao = new \DateTime($contrato3['dt_adesao']);
+                                                                    ?>
+                                                                    <tr>
+                                                                        <th colspan="1" class="<?= $class3 ?>" title="<?= 'Nivel: ' . $contrato3['id_nivel'] . "-  contratos_as_contratos: " . $contrato3['id_contratos_as_contratos'] ?>" >
+                                                                            <span
+                                                                                data-toggle="popover"
+                                                                                title='<?= \Estrutura\Helpers\String::nomeMaiusculo($contrato3['nm_usuario']) . ' - "' . Estrutura\Helpers\Cript::encCod($contrato3['id_usuario']) . '"'; ?>' 
+                                                                                data-content="<?=
+                                                                                '<p>Nível: ' . $contrato3['id_nivel'] . "</p>"
+                                                                                . '<p>Situação: ' . $contrato3['nm_situacao_usuario'] . '</p>'
+                                                                                . '<p>Email: ' . $contrato3['em_email'] . '</p>'
+                                                                                . '<p>Telefone: ' . \Estrutura\Helpers\Telefone::telefoneMask($contrato3['nr_ddd_telefone'] . $contrato3['nr_telefone']) . '</p>'
+                                                                                . '<p>Data de adesão: ' . $dateAdesao->format('d/m/Y') . '</p>';
+                                                                                ?>">
+                                                                                    <?php
+                                                                                    if ($contrato3['id_situacao_usuario'] == $configList['situacao_usuario_ativo']) {
+                                                                                        ?>
+                                                                                    <img src="/assets/img/user_ativo_pq.png" style="cursor: pointer;">
+                                                                                    <?php
+                                                                                } else {
+                                                                                    ?>
+                                                                                    <img src="/assets/img/user_inativo_pq.png" style="cursor: pointer;">
+                                                                                    <?php
+                                                                                }
+                                                                                ?>
+                                                                            </span>
+                                                                        </th>
+                                                                    </tr>     
+                                                                    <?php
+                                                                }
+                                                            }
+                                                        }
+                                                        for ($i3 = $count3; $i3 < $configList['qtd_por_nivel']; $i3++) {
+                                                            ?>
+                                                            <tr>
+                                                                <th colspan="1" class="<?= $i3 == $configList['qtd_por_nivel'] - 1 ? 'end' : 'start' ?>">
+                                                                    <img src="/assets/img/user_congelado_pq.png">
+                                                                </th>
+                                                            </tr>                             
+                                                            <?php
+                                                        }
+                                                        ?>
+                                                    </tbody>
+                                                </table>                
+                                                </th>
+                                                </tr>
+                                                <?php
+//                                    }
+                                            }
+                                        }
+                                    }
+                                    for ($i2 = $count2; $i2 < $configList['qtd_por_nivel']; $i2++) {
+                                        ?>
+                                        <tr>
+                                            <th colspan="1" class="<?= $i2 == ($configList['qtd_por_nivel'] - 1) ? 'end' : 'start' ?>">
+                                                <img src="/assets/img/user_congelado_pq.png">
+                                            </th>
+                                        </tr>                             
+                                        <?php
+                                    }
+                                    ?>
+                                    </tbody>
+                                </table>                
+                                </th>
+                                </tr>
+                                <?php
+//                }
+                            }
+                            for ($i1 = $count1; $i1 < $configList['qtd_por_nivel']; $i1++) {
+                                ?>
+                                <tr>
+                                    <th colspan="1" class="<?= $i1 == $configList['qtd_por_nivel'] - 1 ? 'end' : 'start' ?>">
+                                        <img src="/assets/img/user_congelado_pq.png">
+                                    </th>
+                                </tr>                             
+                                <?php
+                            }
+                            ?>
+                            </tbody>
+                        </table>                
+                        </th>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-3">
+                    <br>
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <img src="/assets/img/user_congelado_pq.png">
+                            <p>Vazio</p>
+                        </div>
+                    </div>            
+                    <br>
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <img src="/assets/img/user_inativo_pq.png">
+                            <p>Inativo</p>
+                        </div>
+                    </div>            
+                    <br>
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <img src="/assets/img/user_ativo_pq.png">
+                            <p>Ativo</p>
+                        </div>
+                    </div>                        
+                </div>
+            </div>
+
+        </div>
+
+        <div class="tab-pane" id="mcnetwork-unilevel-tab">
+            <br>
+            <div class="col-md-12 content">
+                <?php
+                for ($i4 = 1; $i4 <= 3; $i4++) {
+                    ?>
+                    <div class="panel panel-info">
+                        <div class="panel-heading" id="collapseNivel<?= $i4; ?>" style="cursor: pointer;">
+                            <h4 class="panel-title">
+                                <?= $i4; ?>° Nível 
+                            </h4>
+                        </div>
+                        <div id="collapseRede<?= $i4; ?>" class="collapse">
+                            <div class="panel-body">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">
+                                                Nº
+                                            </th>
+                                            <th class="text-center">
+                                                Contrato
+                                            </th>
+                                            <th class="text-center">
+                                                Nome completo
+                                            </th>
+                                            <th class="text-center">
+                                                E-mail
+                                            </th>
+                                            <th class="text-center">
+                                                Telefone
+                                            </th>
+                                            <th class="text-center">
+                                                Situação
+                                            </th>            
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        -                                        <?php
+                                        $numero = 0;
+                                        if (!empty($listUniLevel)) {
+                                            foreach ($listUniLevel as $key => $uniLevel) {
+
+                                                if ($uniLevel['id_nivel'] == $i4) {
+                                                    $numero++;
+                                                    ?>
+                                                    <tr>
+                                                        <td  class="text-center"><h6><?= $numero ?></h6></td>
+                                                        <td  class="text-center"><h6>"<?= Estrutura\Helpers\Cript::encCod($uniLevel['id_usuario']) ?>"</h6></td>
+                                                        <td  class="text-center"><h6><?= \Estrutura\Helpers\String::nomeMaiusculo($uniLevel['nm_usuario']) ?></h6></td>
+                                                        <td class="text-center">
+                                                            <h6>
+                                                                <a href="mailto:<?= $uniLevel['em_email'] ?>">
+                                                                    <?= $uniLevel['em_email'] ?>
+                                                                </a>
+                                                            </h6>
+                                                        </td>
+                                                        <td  class="text-center">
+                                                            <h6>
+                                                                <a href="tel:<?= \Estrutura\Helpers\Telefone::telefoneMask($uniLevel['nr_ddd_telefone'] . $uniLevel['nr_telefone']) ?>">
+                                                                    <?= \Estrutura\Helpers\Telefone::telefoneMask($uniLevel['nr_ddd_telefone'] . $uniLevel['nr_telefone']) ?>
+                                                                </a>
+                                                            </h6>
+                                                        </td>
+                                                        <td  class="text-center"><h6>
+                                                                <?php
+                                                                switch ($uniLevel['id_situacao_usuario']) {
+                                                                    case $configList['situacao_usuario_ativo']:
+
+                                                                        $class = 'alert alert-success';
+                                                                        break;
+                                                                    case $configList['situacao_usuario_inativo']:
+
+                                                                        $class = 'alert alert-warning';
+                                                                        break;
+                                                                    case $configList['situacao_usuario_atrasado']:
+
+                                                                        $class = 'alert alert-info';
+                                                                        break;
+                                                                }
+                                                                ?>
+                                                                <span class="<?= $class ?>">
+                                                                    <?= ($uniLevel['nm_situacao_usuario']) ?>
+                                                                </span>    
+                                                            </h6>
+                                                        </td>
+                                                    </tr>
+                                                    <?php
+                                                }
+                                            }
+                                        } else {
+                                            ?>
+                                            <tr>
+                                                <td colspan="7" class="text-center">
+                                                    Nenhum resultado encontrado
+                                                </td>                            
+                                            </tr>
+                                            <?php
+                                        }
+                                        ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <?php
+                }
+                ?>
+                <br>
+            </div>
+        </div>
+
+        <div class="tab-pane" id="mcnetwork-indicacao-tab">
+
+            <br>
+            <div class="col-md-12 content">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            Usuários indicados
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">
+                                        Nº
+                                    </th>
+                                    <th class="text-center">
+                                        Contrato
+                                    </th>
+                                    <th class="text-center">
+                                        Nome completo
+                                    </th>
+                                    <th class="text-center">
+                                        E-mail
+                                    </th>
+                                    <th class="text-center">
+                                        Celular
+                                    </th>
+                                </tr>
+                            </thead>    
+                            <tbody>
+                                <?php
+                                if (!empty($listIndicacao)) {
+                                    foreach ($listIndicacao as $key => $indicacao) {
+                                        ?>
+                                        <tr>
+                                            <td class="text-center"><h6><?= $key + 1 ?></h6></td>
+                                            <td class="text-center"><h6>"<?= Estrutura\Helpers\Cript::encCod($indicacao['id_usuario']) ?>"</h6></td>
+                                            <td class="text-center"><h6><?= \Estrutura\Helpers\String::nomeMaiusculo($indicacao['nm_usuario']) ?></h6></td>
+                                            <td class="text-center">
+                                                <h6>
+                                                    <a href="mailto:<?= $indicacao['em_email'] ?>">
+                                                        <?= $indicacao['em_email'] ?>
+                                                    </a>
+                                                </h6>
+                                            </td>
+                                            <td class="text-center">
+                                                <h6>
+                                                    <a href="tel:<?= \Estrutura\Helpers\Telefone::telefoneMask($indicacao['nr_ddd_telefone'] . $indicacao['nr_telefone']) ?>">
+                                                        <?= \Estrutura\Helpers\Telefone::telefoneMask($indicacao['nr_ddd_telefone'] . $indicacao['nr_telefone']) ?>
+                                                    </a>
+                                                </h6>
+                                            </td>
+                                        </tr>                            
+                                        <?php
+                                    }
+                                } else {
+                                    ?>
+                                    <tr>
+                                        <td colspan="5" class="text-center">
+                                            Nenhum resultado encontrado
+                                        </td>                            
+                                    </tr>
+                                    <?php
+                                }
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <br>
+            </div>
+
+        </div>
+
+        <div class="tab-pane" id="mcnetwork-pendentes-tab">
+
+            <br>
+            <div class="col-md-12 content">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            Usuários cadastrados que não efetuaram o primeiro pagamento
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">
+                                        Nº
+                                    </th>
+                                    <th class="text-center">
+                                        Contrato
+                                    </th>
+                                    <th class="text-center">
+                                        Nome completo
+                                    </th>
+                                    <th class="text-center">
+                                        E-mail
+                                    </th>
+                                    <th class="text-center">
+                                        Celular
+                                    </th>
+                                </tr>
+                            </thead>    
+                            <tbody>
+                                <?php
+                                if (!empty($listPendentes)) {
+                                    foreach ($listPendentes as $key => $pendentes) {
+                                        ?>
+                                        <tr>
+                                            <td class="text-center"><h6><?= $key + 1 ?></h6></td>
+                                            <td class="text-center"><h6>"<?= Estrutura\Helpers\Cript::encCod($pendentes['id_usuario']) ?>"</h6></td>
+                                            <td class="text-center"><h6><?= \Estrutura\Helpers\String::nomeMaiusculo($pendentes['nm_usuario']) ?></h6></td>
+                                            <td class="text-center">
+                                                <h6>
+                                                    <a href="mailto:<?= $pendentes['em_email'] ?>">
+                                                        <?= $pendentes['em_email'] ?>
+                                                    </a>
+                                                </h6>
+                                            </td>
+                                            <td class="text-center">
+                                                <h6>
+                                                    <a href="tel:<?= \Estrutura\Helpers\Telefone::telefoneMask($pendentes['nr_ddd_telefone'] . $pendentes['nr_telefone']) ?>">
+                                                        <?= \Estrutura\Helpers\Telefone::telefoneMask($pendentes['nr_ddd_telefone'] . $pendentes['nr_telefone']) ?>
+                                                    </a>
+                                                </h6>
+                                            </td>
+                                        </tr>                            
+                                        <?php
+                                    }
+                                } else {
+                                    ?>
+                                    <tr>
+                                        <td colspan="5" class="text-center">
+                                            Nenhum resultado encontrado
+                                        </td>                            
+                                    </tr>
+                                    <?php
+                                }
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <br>
+            </div>
+        </div>
+    </div>
+    <br>
+
+    <?php
+} else {
+    ?>
+    <!--<link href="/assets/compact-css/mc-network|cursos|list.css" rel="stylesheet" />-->
+    <div class="col-12 col-sm-12 col-lg-12">
+        <div class="bs-callout bs-callout-danger">
+            <span class="glyphicon glyphicon-exclamation-sign"></span>
+            <!--<span class="glyphicon glyphicon-barcode"></span>-->
+            <a href="#" title="Click aqui para efetuar o pagamento" id="course-information-rede">                
+                Click aqui para efetuar o pagamento e liberar o acesso.
+            </a>
+        </div>
+    </div>  
+    <?php
+}
+?>

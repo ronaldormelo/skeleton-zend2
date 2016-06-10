@@ -1,0 +1,74 @@
+<link rel="stylesheet" href="/assets/compact-css/jquery.fileupload.css">
+<div class="row">
+    <div class="DocumentList" style="height: 130px;">
+        <ul class="list-inline">
+            <?php
+            foreach ($list as $item) {
+                ?>
+                <li>
+                    <div class="col-12 col-sm-12 col-lg-12">
+                        <img src="<?= $item->getArImagem() ?>" class="img" height="100px">
+                    </div>
+                </li>
+                <?php
+            }
+            ?>      
+        </ul>
+    </div>
+</div>
+<div class="row">
+    <blockquote>
+        De <s>R$ <?= $configList['valor_de'] ?></s> por apenas R$ <?= $configList['valor_por'] ?> por mês!
+    </blockquote>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-12 text-center">
+        <?php
+        if ($loginAtivo) {
+
+            if ($liberaPagamentoMensalidade) {
+                ?>
+                <div class="form-group">
+                    <a class="btn btn-primary" href="/boleto/itau/html" target="_blank">
+                        <i class="glyphicon glyphicon-barcode"></i>
+                        <span>Imprimir Boleto</span>
+                    </a>
+                    <div>
+                        <div class="bs-callout bs-callout-warning">
+                            <span class="glyphicon glyphicon-exclamation-sign"></span>
+                            <b>São 4 dias úteis para confirmação de pagamento com boleto bancário.</b>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="bs-callout bs-callout-info">
+                            <span class="glyphicon glyphicon-exclamation-sign"></span>
+                            <b>ATENÇÃO:</b> Alertamos sobre a existência de um vírus que se propaga pela internet e infecta computadores, alterando dados de boletos emitidos pela Web com o objetivo de realizar crédito indevido em conta de terceiros. Para impedir esse tipo de fraude é necessário que o antivírus do seu computador esteja sempre atualizado.
+                        </div>
+                    </div>                    
+                </div>
+                <br>
+
+                <?php
+            } else {
+                ?>
+                <div class="form-group">
+                    <span class="btn btn-success fileinput-button disabled">
+                        <i class="glyphicon glyphicon-ok"></i>
+                        <span>Mensalidade Paga!</span>                    
+                    </span>
+                </div>
+                <?php
+            }
+        } else {
+            ?>
+            <div class="bs-callout bs-callout-danger">
+                <p><b>Confirme seu cadastro para liberar a impressão do boleto.</b></p>
+                <p><b>Para confirmar seu cadastro, leia as instruções que enviamos para o e-mail "<?= $auth->em_email ?>".</b></p>
+                <button type="button" id="reenviar-email" class="btn btn-primary">Reenviar email de confirmação de cadastro</button>
+            </div>    
+            <?php
+        }
+        ?>
+    </div>
+    <script src="/assets/compact-js/jquery.ui.widget.js,jquery.iframe-transport.js,jquery.fileupload.js,mc-network|cursos|course-information.js" type="text/javascript"></script>

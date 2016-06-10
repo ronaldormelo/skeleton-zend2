@@ -1,0 +1,128 @@
+<div class="panel panel-primary">
+    <div class="panel-heading" 
+         title="Questionário">
+        <h4 class="panel-title">
+            <b>
+                Responda o questionário
+            </b> 
+        </h4>
+    </div>
+    <form name="form-test" id="form-test" method="post">
+        <input type="hidden" name="id" value="<?= \Estrutura\Helpers\Cript::enc($idCurso . '_' . $idContent)?>">
+        
+        <div class="col-xs-12 col-sm-12">
+            <br>
+            <?php
+            if (isset($quizQuestions['ques']) && !empty($quizQuestions['ques'])) {
+                foreach ($quizQuestions['ques'] as $key => $question) {
+                    ?>
+                    <div class="row">
+                        <div class="col-12 col-xs-12">
+
+                            <h4><?= ($key + 1) . ') ' . $quizQuestions['post'][$key]['post_content'] ?></h4>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <?php
+                        switch ($quizQuestions['postMeta'][$key]['vibe_question_type']) {
+                            case 'multiple':
+                                ?>
+
+                                <?php
+                                break;
+                            case 'single':
+                                ?>
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <?php
+                                        $options = unserialize($quizQuestions['postMeta'][$key]['vibe_question_options']);
+
+                                        if (!empty($options)) {
+                                            foreach ($options as $key2 => $option) {
+                                                ?>
+                                                <label class="radio">
+                                                    <input name="answer<?= \Estrutura\Helpers\Cript::enc($quizQuestions['post'][$key]['ID']) ?>"                                                        
+                                                           value="<?= ($key2 + 1) ?>" type="radio"><?= $option ?>
+                                                </label>
+                                                <?php
+                                            }
+                                        }
+                                        ?>
+                                    </div>
+                                </div>
+                                <?php
+                                break;
+                            case 'smalltext':
+                                ?>
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <input type="text" name="answer<?= \Estrutura\Helpers\Cript::enc($quizQuestions['post'][$key]['ID']) ?>">
+                                    </div>
+                                </div>
+                                <?php
+                                break;
+                            case 'largetext':
+                                ?>
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <textarea class="col-md-12" name="answer<?= \Estrutura\Helpers\Cript::enc($quizQuestions['post'][$key]['ID']) ?>"></textarea>
+                                    </div>
+                                </div>
+                                <?php
+                                break;
+                            case 'truefalse':
+                                ?>
+
+                                <?php
+                                break;
+                            case 'sort':
+                                ?>
+
+                                <?php
+                                break;
+                            case 'match':
+                                ?>
+
+                                <?php
+                                break;
+                            case 'fillblank':
+                                ?>
+
+                                <?php
+                                break;
+                            case 'select':
+                                ?>
+
+                                <?php
+                                break;
+                            default:
+                                ?>
+
+                                <?php
+                                break;
+                        }
+                        ?>
+                    </div>
+                    <hr>
+                    <?php
+                }
+            }
+            ?>
+
+            <div class="row">
+
+                <div class="col-6 col-xs-6 text-center">
+
+                    <button id="btn-save-test" class="btn btn-primary" rel="<?= \Estrutura\Helpers\Cript::enc($idCurso . '_' . $nextContent) ?>">
+                        <i class="glyphicon glyphicon-send"></i>
+                        Salvar e enviar
+                    </button>   
+                </div>
+
+            </div>
+            <br>
+        </div>
+    </form>
+</div>
+<script src="/assets/compact-js/mc-network|cursos|start-test.js" type="text/javascript"></script>
+

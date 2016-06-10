@@ -1,0 +1,21 @@
+<footer>
+    <div class="row">
+        <div class="col-md-2">&nbsp;</div>
+        <div class="col-md-8 text-center">
+            <a href="/application-index/politica-privacidade">Política de Privacidade</a> | 
+            <a href="/application-index/termo-utilizacao">Termos de Utilização do Serviço</a> | 
+            <a href="/application-index/declaracao-seguranca">Declaração de Segurança</a>
+            <br>
+            <br>
+            <a href="<?= $this->Config('dominio') ?>" title="<?= $this->Config('nome_projeto') ?> - <?= $this->Config('slogan') ?>">
+                <img src="/assets/img/logo/logo-menu.png" />
+            </a>
+            <br>
+            <br>
+            <p>Copyright©<?= date('Y'); ?> <?= $this->Config('nome_projeto') ?> - <?= $this->Config('slogan') ?></p>
+            <p><?= $this->ConfigService('email_admin') ?> | +55<?= \Estrutura\Helpers\Telefone::telefoneMask($this->ConfigService('telefone_admin')) ?> | <?= \Estrutura\Helpers\Url::urlFilter($this->Config('dominio')) ?></p>
+        </div>
+        <div class="col-md-2">&nbsp;</div>
+    </div>
+    <br>    
+</footer>

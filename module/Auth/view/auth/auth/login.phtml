@@ -1,0 +1,89 @@
+<link rel="stylesheet" type="text/css" href="/assets/css/selectize.bootstrap2.css" />
+<div class="row row-offcanvas row-offcanvas-right">
+
+    <div class="col-xs-12 col-sm-4">
+
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="light panel-title">Login</h3>
+            </div>
+            <div class="panel-body">
+                <?php
+                $form = $this->form;
+                $form->setAttribute('action', $this->url('authenticate'));
+                $form->setAttribute('method', 'post');
+                $form->setAttribute('class', 'form-horizontal');
+
+                $form->prepare();
+                echo $this->form()->openTag($form);
+                ?>
+
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <?= $this->formRow($form->get('email')) ?>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <?= $this->formRow($form->get('senha')) ?>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-primary">ok</button>                        
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-12 text-center" style="margin: 4px 0px 4px 0px;">
+                        <a href="/auth/esqueci-senha" class="pull-right">Não consigo acessar minha conta</a>
+                    </div>
+                </div>
+                <?php
+                echo $this->form()->closeTag();
+                ?>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-8">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="light panel-title">Assine já</h3>
+            </div>
+            <div class="panel-body">
+
+                <div class="row">
+                    <div class="col-xs-12 col-sm-5">
+                        <img src="/assets/img/radiant_deko_01.jpg" class=" img-responsive img-rounded">
+                    </div>
+                    <div class="col-xs-12 col-sm-7">
+                        <h3>Conhecimento de excelência com a flexibilidade que você precisa.</h3>
+                        <p>
+                            Digite o código de recomendação para iniciar o cadastro e usufruir dos cursos on-line com suporte especializado.
+                        </p>
+                        <form action="/cadastro" method="post" name="cadastro" class="form-horizontal" id="login">
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <label for="id">Código de recomendação:</label>
+                                    <input type="text" name="id" id="id" class="form-control" required="required" data-error="Campo é obrigatório." value="">
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <button class="btn btn-primary" type="submit">
+                                        Criar uma conta
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>                
+                </div>                
+            </div>
+        </div>
+    </div>
+</div>

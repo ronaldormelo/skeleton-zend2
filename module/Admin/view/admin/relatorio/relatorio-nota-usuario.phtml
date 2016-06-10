@@ -1,0 +1,100 @@
+<input type="hidden" name="id_pagamento_nota" id="id_pagamento_nota" value="<?= \Estrutura\Helpers\Cript::enc($pagamento['id_pagamento'])?>" />
+<br />
+<h4>&nbsp;&nbsp;&nbsp;&nbsp;Dados do Pagamento</h4>
+<hr />
+<table class="table table-striped">
+    <tbody>
+        <tr >
+            <td style="width: 30%"><h6><b class="pull-right">Referência: </b></h6></td><td><h6><?= \Estrutura\Helpers\String::preencheEsquerda($pagamento['id_pagamento'], 8, '0'); ?></h6></td>
+        </tr>
+        <tr >
+            <td><h6><b class="pull-right">Valor: </b></h6></td><td><h6>R$ <?= \Estrutura\Helpers\Valor::reais($pagamento['vl_pago']) ?></h6></td>
+        </tr>
+        <tr >
+            <td><h6><b class="pull-right">Origem: </b></h6></td><td><h6><?= $pagamento['ar_comprovante_pagamento'] ?></h6></td>
+        </tr>        
+    </tbody>
+</table>
+<h4>&nbsp;&nbsp;&nbsp;&nbsp;Dados Pessoais</h4>
+<table class="table table-striped">
+    <tbody>
+        <tr>
+            <td style="width: 30%"><h6><b class="pull-right">Nome Completo: </b></h6></td><td><h6><?= \Estrutura\Helpers\String::nomeMaiusculo($usuario['nm_usuario']) ?></h6></td>
+        </tr>
+        <?php
+        $dateAdesao = new \DateTime($usuario['dt_nascimento']);
+        ?>
+        <tr>
+            <td><h6><b class="pull-right">Data de nascimento: </b></h6></td><td><h6><?= $dateAdesao->format('d/m/Y') ?></h6></td>
+        </tr>
+        <tr >
+            <td><h6><b class="pull-right">Nascionalidade: </b></h6></td><td><h6><?= ucwords($usuario['nm_nacionalidade']) ?></h6></td>
+        </tr>
+        <tr >
+            <td><h6><b class="pull-right">Estado civil: </b></h6></td><td><h6><?= ucwords($usuario['nm_estado_civil']) ?></h6></td>
+        </tr>
+        <tr >
+            <td><h6><b class="pull-right">Profissão: </b></h6></td><td><h6><?= ucwords($usuario['nm_profissao']) ?></h6></td>
+        </tr>
+        <tr >
+            <td><h6><b class="pull-right">CPF: </b></h6></td><td><h6><?= \Estrutura\Helpers\Cpf::cpfMask($usuario['nu_cpf']) ?></h6></td>
+        </tr>
+        <tr >
+            <td><h6><b class="pull-right">RG: </b></h6></td><td><h6><?= ucwords($usuario['nu_rg']) ?></h6></td>
+        </tr>
+        <tr>
+            <td><h6><b class="pull-right">Telefone: </b></h6></td>
+            <td>
+                <h6>
+                    <a href="tel:<?= \Estrutura\Helpers\Telefone::telefoneMask($usuario['nr_ddd_telefone'] . $usuario['nr_telefone']) ?>">
+                        <?= \Estrutura\Helpers\Telefone::telefoneMask($usuario['nr_ddd_telefone'] . $usuario['nr_telefone']) ?>
+                    </a>
+                </h6>
+            </td>
+        </tr>
+        <tr >
+            <td><h6><b class="pull-right">Cidade: </b></h6></td><td><h6><?= ucwords($usuario['nm_cidade']) ?></h6></td>
+        </tr>
+        <tr >
+            <td><h6><b class="pull-right">Estado: </b></h6></td><td><h6><?= ucwords($usuario['nm_estado']) ?></h6></td>
+        </tr>
+        <tr>
+            <td><h6><b class="pull-right">E-mail: </b></h6></td>
+            <td>
+                <h6>
+                    <a href="mailto:<?= $usuario['em_email'] ?>">
+                        <?= $usuario['em_email'] ?>
+                    </a>
+                </h6>
+            </td>
+        </tr>
+    </tbody>
+</table> 
+<h4>&nbsp;&nbsp;&nbsp;&nbsp;Endereço</h4>
+<hr />
+<table class="table table-striped">
+    <tbody>
+        <tr >
+            <td style="width: 30%"><h6><b class="pull-right">Logradouro: </b></h6></td><td><h6><?= $usuario['nm_logradouro'] ?></h6></td>
+        </tr>
+        <tr >
+            <td><h6><b class="pull-right">Número: </b></h6></td><td><h6><?= $usuario['nr_numero'] ?></h6></td>
+        </tr>        
+        <tr>
+            <td><h6><b class="pull-right">Complemento: </b></h6></td><td><h6><?= $usuario['nm_complemento'] ?></h6></td>
+        </tr>
+        <tr >
+            <td><h6><b class="pull-right">Bairro: </b></h6></td><td><h6><?= $usuario['nm_bairro'] ?></h6></td>
+        </tr>
+        <tr >
+            <td><h6><b class="pull-right">Cidade: </b></h6></td><td><h6><?= $usuario['nm_cidade'] ?></h6></td>
+        </tr>
+        <tr >
+            <td><h6><b class="pull-right">Estado: </b></h6></td><td><h6><?= $usuario['nm_estado'] ?></h6></td>
+        </tr>
+        <tr >
+            <td><h6><b class="pull-right">CEP: </b></h6></td><td><h6><?= \Estrutura\Helpers\Cep::cepMask($usuario['nr_cep']) ?></h6></td>
+        </tr>
+    </tbody>
+</table>
+<script src="/assets/compact-js/mc-network|relatorio|relatorio-nota-usuario.js" type="text/javascript"></script>    

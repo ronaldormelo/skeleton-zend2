@@ -1,0 +1,66 @@
+table
+{
+    border-collapse: collapse;
+    font-size: 14px;
+    line-height: 1.1;
+}
+
+th, td
+{
+    padding: .3em .5em;
+}
+
+th.name { width: 12em; }
+th.location { width: 12em; }
+th.color { width: 10em; }
+
+thead th
+{
+    background: #c6ceda;
+    border-color: #fff #fff #888 #fff;
+    border-style: solid;
+    border-width: 1px 1px 2px 1px;
+    padding-left: .5em;
+}
+
+th.file
+{
+    padding-left: 70px;
+    float: left;
+}
+
+th.start
+{
+    background: url(/assets/img/tabletreedots.gif) 18px 54% no-repeat;
+    padding-left: 26px;
+    float: left;
+}    
+
+th.end
+{
+    background: url(/assets/img/tabletreedots2.gif) 18px 54% no-repeat;
+    padding-left: 26px;
+    float: left;
+}
+
+th.fill
+{
+    background: url(/assets/img/tabletreedots3.gif) 18px 54% repeat-y;
+    padding-left: 75px;
+}
+
+th.empty
+{
+    background: url(/assets/img/tabletreedots4.gif) 18px 54% repeat-y;
+    padding-left: 75px;
+    float: left;
+}
+
+th.empty img
+{
+    margin-left: 43px;    
+}
+
+
+
+

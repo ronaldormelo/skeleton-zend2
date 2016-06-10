@@ -1,0 +1,149 @@
+<link href="/assets/compact-css/mc-network|suporte|list.css,mc-network|rede|list-ativacao.css" rel="stylesheet" />
+<br />
+<div class="scroller scroller-left"><i class="glyphicon glyphicon-chevron-left"></i></div>
+<div class="scroller scroller-right"><i class="glyphicon glyphicon-chevron-right"></i></div>
+<div class="wrapper">
+    <ul class="nav nav-tabs list" role="tablist">
+
+        <?php
+        if (!empty($listEmpresas)) {
+            foreach ($listEmpresas as $key => $empresa) {
+                ?>
+                <li <?= $key == 0 ? 'class="active"' : '' ?>>
+                    <a href="#<?= $key ?>-suporte-tab" role="tab" data-toggle="tab" title="<?= $empresa['id_empresa'] ?>">
+                        <img src="<?= $empresa['ar_logo'] ?>">
+                    </a>
+                </li>
+                <?php
+            }
+        } else {
+            ?>
+            <div class="bs-callout bs-callout-info">
+                <span class="glyphicon glyphicon-exclamation-sign"></span>
+                Você não tem empresas selecionadas para suporte.
+            </div>
+            <?php
+        }
+        ?>        
+    </ul>
+</div>
+
+<div class="tab-content">
+
+    <?php
+    if (!empty($listEmpresas)) {
+        foreach ($listEmpresas as $key => $empresa) {
+            ?>
+
+            <div <?= $key == 0 ? 'class="tab-pane active"' : 'class="tab-pane"' ?> id="<?= $key ?>-suporte-tab">
+                <br>
+                <div class="row">
+
+                    <div class="DocumentList">
+
+                        <ul class="list-inline">
+
+                            <?php
+                            if (!empty($listVideos)) {
+                                foreach ($listVideos as $video) {
+
+                                    if ($video['id_empresa'] == $empresa['id_empresa']) {
+                                        ?>
+                                        <li class="DocumentItem">
+                                            <div class="col-12 col-sm-12 col-lg-12 content">
+                                                <a href="#" value="<?= $video['ar_video'] ?>" class="abrir-modal-video-suporte">
+                                                    <img src="/assets/img/videos/<?= $video['ar_video'] ?>.jpg" class="img-thumbnail" style="width: 330px;" />
+                                                </a>
+                                            </div>
+                                        </li>
+                                        <?php
+                                    }
+                                }
+                            }
+                            ?>        
+                        </ul>
+                    </div>
+                </div>
+                <br>
+            </div>
+            <?php
+        }
+    }
+    ?>
+</div>
+
+<div class="row">
+    <?php
+    if (($liberaPagamentoMensalidade) && ($mensalidadeFoiPaga)) {
+        ?>
+        <div class="col-12 col-sm-12 col-lg-12">
+            <div class="bs-callout bs-callout-warning">
+                <span class="glyphicon glyphicon-exclamation-sign"></span>
+                <a href="#" title="Click aqui para efetuar o pagamento" id="course-information-suporte">
+                    Assinatura: de <s>R$ <?= $configList['valor_de'] ?></s> por apenas R$ <?= $configList['valor_por'] ?> por mês! Click aqui para efetuar o pagamento.
+                </a>
+            </div>
+        </div>        
+        <?php
+    } elseif (!$mensalidadeFoiPaga) {
+        ?>
+        <div class="col-12 col-sm-12 col-lg-12">
+            <div class="bs-callout bs-callout-danger">
+                <span class="glyphicon glyphicon-exclamation-sign"></span>
+                <a href="#" title="Click aqui para efetuar o pagamento" id="course-information-suporte">
+                    Assinatura: de <s>R$ <?= $configList['valor_de'] ?></s> por apenas R$ <?= $configList['valor_por'] ?> por mês! Click aqui para efetuar o pagamento e liberar o acesso.
+                </a>
+            </div>
+        </div>        
+        <?php
+    }
+    ?>
+</div>
+
+<br>
+
+<div class="row_form">           
+    <div class="col-md-12 ">
+        <div class="form-group">
+            <div class="col-md-12">
+                <?= $this->formRow($form->get('id_empresa')) ?>
+                <div class="help-block with-errors"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row_form">           
+    <div class="col-md-12">
+        <div class="btn-toolbar">     
+                <button type="button" class="btn btn-primary pull-right" id="btnAdicionarEmpresaSuporte"
+                        title="Salvar">
+                    <span class="glyphicon glyphicon-ok"></span> Salvar
+                </button>    
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12 col-sm-12 col-lg-12">
+        <br>
+    </div>
+</div>
+
+<!--</div>-->
+
+<div class="modal fade" id="modal-suporte-access">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span></button>
+                <h4 class="modal-title">Vídeo de Suporte</h4>
+            </div>
+            <div class="modal-body" id="modal-suporte-access-body"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/assets/compact-js/mc-network|suporte|list.js" type="text/javascript"></script>

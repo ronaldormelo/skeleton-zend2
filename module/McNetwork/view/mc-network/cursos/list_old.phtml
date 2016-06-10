@@ -1,0 +1,262 @@
+<link href="/assets/compact-css/mc-network|cursos|list.css,mc-network|rede|list-ativacao.css" rel="stylesheet" />
+<br />
+<div class="scroller scroller-left"><i class="glyphicon glyphicon-chevron-left"></i></div>
+<div class="scroller scroller-right"><i class="glyphicon glyphicon-chevron-right"></i></div>
+<div class="wrapper">
+    <ul class="nav nav-tabs list" role="tablist">
+        <!--<li class="active">
+            <a href="#mcnetwork-cursos-marketing_multinivel-tab" role="tab" data-toggle="tab">
+                Marketing multinível
+            </a>
+        </li>-->
+        <li class="active">
+            <a href="#mcnetwork-cursos-ingles-tab" role="tab" data-toggle="tab">
+                Inglês
+            </a>
+        </li>        
+        <li>
+            <a href="#mcnetwork-cursos-informatica-tab" role="tab" data-toggle="tab">
+                Informática
+            </a>
+        </li>
+        <li>
+            <a href="#mcnetwork-cursos-direito-constitucional-tab" role="tab" data-toggle="tab">
+                Direito Constitucional
+            </a>
+        </li>
+        <li>
+            <a href="#mcnetwork-cursos-direito-administrativo-tab" role="tab" data-toggle="tab">
+                Direito Administrativo
+            </a>
+        </li>
+        <li>
+            <a href="#mcnetwork-cursos-portugues-para-concursos-tab" role="tab" data-toggle="tab">
+                Português para concursos
+            </a>
+        </li>
+        <li>
+            <a href="#mcnetwork-cursos-redacao-para-concursos-tab" role="tab" data-toggle="tab">
+                Redação para Concursos
+            </a>
+        </li>
+        <li>
+            <a href="#mcnetwork-cursos-matematica-reciocinio-logico-tab" role="tab" data-toggle="tab">
+                Matemática e Raciocínio Lógico
+            </a>
+        </li>
+        <li>
+            <a href="#mcnetwork-cursos-direito-penal-tab" role="tab" data-toggle="tab">
+                Direito Penal
+            </a>
+        </li>
+    </ul>
+</div>
+
+<div class="tab-content">
+
+    <!-- <div class="tab-pane active" id="mcnetwork-cursos-marketing_multinivel-tab">
+        <br>
+        <div class="row">
+
+            <div class="DocumentList">
+
+                <ul class="list-inline">
+
+                    <?php
+                    foreach ($list as $item) {
+
+                        if ($item->getIdTipo() == $configList['tipo_curso_marketing_multinivel']) {
+                            ?>
+                            <li class="DocumentItem">
+                                <input type="hidden" id="title_curso_<?= \Estrutura\Helpers\Cript::enc($item->getId()) ?>" value="<?= $item->getNmCurso() ?>">
+                                <div class="col-12 col-sm-12 col-lg-12">
+
+                                    <a href="#" class="access-course" value="<?= \Estrutura\Helpers\Cript::enc($item->getId()) ?>" title="Click para acessar o curso">
+                                        <img src="<?= $item->getArImagem() ?>" class="img" height="175">
+                                    </a>
+                                </div>
+                            </li>
+                            <?php
+                        }
+                    }
+                    ?>        
+                </ul>
+            </div>
+        </div>
+        <br>
+    </div>-->
+    <div class="tab-pane active" id="mcnetwork-cursos-ingles-tab">
+        <br>
+        <div class="row">
+
+            <div class="DocumentList">
+
+                <ul class="list-inline">
+
+                    <?php
+                    foreach ($list as $item) {
+                        if ($item->getIdTipo() == $configList['tipo_curso_ingles']) {
+                            ?>
+                            <li class="DocumentItem">
+                                <input type="hidden" id="title_curso_<?= \Estrutura\Helpers\Cript::enc($item->getId()) ?>" value="<?= $item->getNmCurso() ?>">
+                                <div class="col-12 col-sm-12 col-lg-12">
+                                    <a href="#" class="access-course" value="<?= \Estrutura\Helpers\Cript::enc($item->getId()) ?>" title="Click para acessar o curso">
+                                        <img src="<?= $item->getArImagem() ?>" class="img" height="175">
+                                    </a>
+                                </div>
+                            </li>
+                            <?php
+                        }
+                    }
+                    ?>        
+                </ul>
+            </div>
+        </div>
+        <br>
+    </div>
+    <div class="tab-pane" id="mcnetwork-cursos-informatica-tab">
+        <br>
+        <div class="row">
+
+            <div class="DocumentList">
+
+                <ul class="list-inline">
+
+                    <?php
+                    foreach ($list as $item) {
+                        if ($item->getIdTipo() == $configList['tipo_curso_informatica']) {
+                            ?>
+                            <li class="DocumentItem">
+                                <input type="hidden" id="title_curso_<?= \Estrutura\Helpers\Cript::enc($item->getId()) ?>" value="<?= $item->getNmCurso() ?>">
+                                <div class="col-12 col-sm-12 col-lg-12">
+                                    <a href="#" class="access-course" value="<?= \Estrutura\Helpers\Cript::enc($item->getId()) ?>" title="Click para acessar o curso">
+                                        <img src="<?= $item->getArImagem() ?>" class="img" height="175">
+                                    </a>
+                                </div>
+                            </li>
+                            <?php
+                        }
+                    }
+                    ?>        
+                </ul>
+            </div>
+        </div>
+        <br>
+    </div>    
+    <div class="tab-pane" id="mcnetwork-cursos-direito-constitucional-tab">
+        <br>
+        <div class="row text-center">
+            <div class="col-12 col-sm-12 col-lg-12">
+                <img src="/assets/img/Imagem-em-breve.jpg" class="img-thumbnail">
+            </div>
+        </div>
+        <br>
+    </div>        
+    <div class="tab-pane" id="mcnetwork-cursos-direito-administrativo-tab">
+        <br>
+        <div class="row text-center">
+            <div class="col-12 col-sm-12 col-lg-12">
+                <img src="/assets/img/Imagem-em-breve.jpg" class="img-thumbnail">
+            </div>
+        </div>
+        <br>
+    </div>    
+    <div class="tab-pane" id="mcnetwork-cursos-portugues-para-concursos-tab">
+        <br>
+        <div class="row text-center">
+            <div class="col-12 col-sm-12 col-lg-12">
+                <img src="/assets/img/Imagem-em-breve.jpg" class="img-thumbnail">
+            </div>
+        </div>
+        <br>
+    </div>    
+    <div class="tab-pane" id="mcnetwork-cursos-redacao-para-concursos-tab">
+        <br>
+        <div class="row text-center">
+            <div class="col-12 col-sm-12 col-lg-12">
+                <img src="/assets/img/Imagem-em-breve.jpg" class="img-thumbnail">
+            </div>
+        </div>
+        <br>
+    </div>    
+    <div class="tab-pane" id="mcnetwork-cursos-matematica-reciocinio-logico-tab">
+        <br>
+        <div class="row text-center">
+            <div class="col-12 col-sm-12 col-lg-12">
+                <img src="/assets/img/Imagem-em-breve.jpg" class="img-thumbnail">
+            </div>
+        </div>
+        <br>
+    </div>    
+    <div class="tab-pane" id="mcnetwork-cursos-direito-penal-tab">
+        <br>
+        <div class="row text-center">
+            <div class="col-12 col-sm-12 col-lg-12">
+                <img src="/assets/img/Imagem-em-breve.jpg" class="img-thumbnail">
+            </div>
+        </div>
+        <br>
+    </div>    
+</div>
+<div class="row">
+    <?php
+    if ($liberaPagamentoMensalidade && ($mensalidadeFoiPaga)) {
+        ?>
+        <div class="col-12 col-sm-12 col-lg-12">
+            <div class="bs-callout bs-callout-warning">
+                <span class="glyphicon glyphicon-exclamation-sign"></span>
+                <a href="#" title="Click aqui para efetuar o pagamento" id="course-information">
+                    Assinatura: de <s>R$ <?= $configList['valor_de'] ?></s> por apenas R$ <?= $configList['valor_por'] ?> por mês! Click aqui para efetuar o pagamento.
+                </a>
+            </div>
+        </div>        
+        <?php
+    } elseif (!$mensalidadeFoiPaga) {
+        ?>
+        <div class="col-12 col-sm-12 col-lg-12">
+            <div class="bs-callout bs-callout-danger">
+                <span class="glyphicon glyphicon-exclamation-sign"></span>
+                <a href="#" title="Click aqui para efetuar o pagamento" id="course-information">
+                    Assinatura: de <s>R$ <?= $configList['valor_de'] ?></s> por apenas R$ <?= $configList['valor_por'] ?> por mês! Click aqui para efetuar o pagamento e liberar o acesso.
+                </a>
+            </div>
+        </div>        
+        <?php
+    }
+    ?>
+</div>
+<!--</div>-->
+
+<div class="modal fade" id="modal-course-access">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span></button>
+                <h4 class="modal-title">Curso on-line</h4>
+            </div>
+            <div class="modal-body" id="modal-course-access-body"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-view-pay">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span></button>
+                <h4 class="modal-title">Visualizar comprovante</h4>
+            </div>
+            <div class="modal-body" id="modal-view-pay-body"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" id="btn-fechar-view-pay">Fechar</button>
+                <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/assets/compact-js/mc-network|cursos|list.js" type="text/javascript"></script>

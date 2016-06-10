@@ -1,0 +1,26 @@
+<div>
+    <a href="{{BASE_URL}}" target="_blank">
+        <img src="{{BASE_URL}}/assets/img/logo/logo-menu.png" alt="MC Network">
+    </a>
+</div>
+<div>
+    <h2>Olá {{nomeUsuario}}</h2>
+</div>
+<div>
+    <br>
+    <p>O saque solicitado, no valor de R$ {{valor}} foi liberado.</p>
+    <br>
+    <p>Vá no módulo financeiro do sistema, na aba saque e gere o recibo de bônus, assine e envie para a MC Network através do botão "Enviar recibo de bônus".</p>
+    <p>Enquanto você não enviar o recibo de bônus, não poderá realizar outro saque.</p>
+    <br>
+    <p>Perguntas? Entre em contato conosco: <a href="mailto:contato@mcnetwork.com.br">contato@mcnetwork.com.br</a></p> 
+    <br>
+    <p>Atenciosamente,</p>
+    <p><a href="{{BASE_URL}}" target="_blank">Equipe MC Network</a></p>
+    <br>
+    <br>
+    <br>
+    <p>Não responda a este e-mail.</p>    
+    <p>Este comunicado de serviço é obrigatório e foi enviado por e-mail para informar sobre alterações importantes em sua conta do MC Network.</p>
+
+</div>

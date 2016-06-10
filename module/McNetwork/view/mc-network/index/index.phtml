@@ -1,0 +1,363 @@
+<script src="/assets/compact-js/mc-network|index|index.js" type="text/javascript"></script>
+<div class="row row-offcanvas row-offcanvas-right">
+
+    <p class="pull-right visible-xs text-right">
+        <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas"
+                style="padding: 1px 15px; line-height: 2.5; margin: 0 15px;">
+            Menu lateral
+        </button>
+    </p>
+
+    <div class="col-xs-12 col-sm-9">
+
+        <div class="panel-group" id="accordion">
+
+            <div class="panel panel-default">
+                <div class="panel-heading" id="Collapsible1" style="cursor: pointer;" title="Cursos on-line">
+                    <h4 class="panel-title">
+                        <b>
+                            Cursos on-line
+                        </b> 
+                    </h4>
+                </div>
+                <div id="collapseOne" class="collapse">
+                    <div class="panel-body" id="body-collapse-one"></div>
+                </div>
+            </div>
+
+            <?php
+            if ($auth->id_perfil == $configList['perfil_administrador'] || $auth->id_perfil == $configList['perfil_promotor']) {
+                ?>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading" id="Collapsible13" style="cursor: pointer;" title="Suporte">
+                        <h4 class="panel-title">
+                            <b>
+                                Suporte Company Network
+                            </b> 
+                        </h4>
+                    </div>
+                    <div id="collapseThirteen" class="collapse">
+                        <div class="panel-body" id="body-collapse-thirteen"></div>
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading" id="Collapsible3" style="cursor: pointer;" title="Sistema Multinível">
+                        <h4 class="panel-title">
+                            <b>
+                                Sistema Multinível
+                            </b>
+                        </h4>
+                    </div>
+                    <div id="collapseThree" class="collapse">
+                        <div class="panel-body" id="body-collapse-Three"></div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" id="Collapsible4" style="cursor: pointer;" title="Rede">
+                        <h4 class="panel-title">
+                            <b>
+                                Rede
+                            </b>
+                        </h4>
+                    </div>
+                    <div id="collapseFour" class="collapse">
+                        <div class="panel-body" id="body-collapse-for"></div>
+                    </div>
+                </div>
+                <?php
+            }
+            ?>
+            <div class="panel panel-default">
+                <div class="panel-heading" id="Collapsible5" style="cursor: pointer;" title="Dados pessoais">
+                    <h4 class="panel-title">
+                        <b>
+                            Dados pessoais
+                        </b>
+                    </h4>
+                </div>
+                <div id="collapseFive" class="collapse">
+                    <div class="panel-body" id="body-collapse-five"></div>
+                </div>
+            </div>
+            <?php
+            if ($auth->id_perfil == $configList['perfil_administrador'] || $auth->id_perfil == $configList['perfil_promotor']) {
+                ?>
+                <div class="panel panel-default">
+                    <div class="panel-heading" id="Collapsible6" style="cursor: pointer;" title="Financeiro">
+                        <h4 class="panel-title">
+                            <b>
+                                Financeiro
+                            </b>
+                        </h4>
+                    </div>
+                    <div id="collapseSix" class="collapse">
+                        <div class="panel-body" id="body-collapse-six"></div>
+                    </div>
+                </div>
+                <?php
+            }
+            ?>
+            <?php
+            if ($auth->id_perfil == $configList['perfil_administrador']) {
+                ?>
+                <div class="panel panel-warning">
+                    <div class="panel-heading" id="Collapsible7" style="cursor: pointer;" title="Liberar pagamento">
+                        <h4 class="panel-title">
+                            Liberar pagamento
+                        </h4>
+                    </div>
+                    <div id="collapseSeven" class="collapse">
+                        <div class="panel-body" id="body-collapse-seven"></div>
+                    </div>
+                </div>
+                <div class="panel panel-warning">
+                    <div class="panel-heading" id="Collapsible8" style="cursor: pointer;" title="Excluir contrato">
+                        <h4 class="panel-title">
+                            Excluir contrato
+                        </h4>
+                    </div>
+                    <div id="collapseEight" class="collapse">
+                        <div class="panel-body" id="body-collapse-eight"></div>
+                    </div>
+                </div>
+                <div class="panel panel-warning">
+                    <div class="panel-heading" id="Collapsible9" style="cursor: pointer;" title="Ativação (Sistema Multinível)">
+                        <h4 class="panel-title">
+                            Ativação (Sistema Multinível)
+                        </h4>
+                    </div>
+                    <div id="collapseNine" class="collapse">
+                        <div class="panel-body" id="body-collapse-Nine"></div>
+                    </div>
+                </div>
+                <div class="panel panel-warning">
+                    <div class="panel-heading" id="Collapsible10" style="cursor: pointer;" title="Liberar saque">
+                        <h4 class="panel-title">
+                            Liberar saque
+                        </h4>
+                    </div>
+                    <div id="collapseTen" class="collapse">
+                        <div class="panel-body" id="body-collapse-Ten"></div>
+                    </div>
+                </div>
+                <div class="panel panel-warning">
+                    <div class="panel-heading" id="Collapsible11" style="cursor: pointer;" title="Relatórios">
+                        <h4 class="panel-title">
+                            Relatórios
+                        </h4>
+                    </div>
+                    <div id="collapseEleven" class="collapse">
+                        <div class="panel-body" id="body-collapse-Eleven"></div>
+                    </div>
+                </div>
+                <div class="panel panel-warning">
+                    <div class="panel-heading" id="Collapsible12" style="cursor: pointer;" title="Divisão de lucros">
+                        <h4 class="panel-title">
+                            Divisão de lucros
+                        </h4>
+                    </div>
+                    <div id="collapseTwelve" class="collapse">
+                        <div class="panel-body" id="body-collapse-Twelve"></div>
+                    </div>
+                </div>
+                <div class="panel panel-warning">
+                    <div class="panel-heading" id="Collapsible14" style="cursor: pointer;" title="Comunicados">
+                        <h4 class="panel-title">
+                            Comunicados
+                        </h4>
+                    </div>
+                    <div id="collapseFourteen" class="collapse">
+                        <div class="panel-body" id="body-collapse-fourteen"></div>
+                    </div>
+                </div>
+                <?php
+            }
+            ?>
+        </div>
+
+        <?php
+        if ($auth->id_perfil == $configList['perfil_administrador'] || $auth->id_perfil == $configList['perfil_promotor']) {
+            if (!$mensalidadeFoiPaga) {
+
+                $videosApresentacao = current(json_decode(trim($configList['codigo_video_apresentacao']), true));
+                ?>
+                <script>
+
+                    $(function () {
+
+                        $.ajax({
+                            type: "post",
+                            dataType: "text",
+                            cache: false,
+                            url: '/mcnetwork-rede/view-video-apresentacao',
+                            async: true,
+                            data: {
+                                cod: '<?= $videosApresentacao ?>'
+                            },
+                            success: function (data) {
+
+                                $('#modal-video-apresentacao-body').html(data);
+                                $('#modal-video-apresentacao').modal('show');
+                            }
+                        });
+                        $('#modal-video-apresentacao').on('hidden.bs.modal', function () {
+                            $('#modal-video-apresentacao-body').html('');
+                        });
+                    });</script>
+
+                <div class="modal fade" id="modal-video-apresentacao">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span></button>
+                                <h4 class="modal-title">Video de Apresentação</h4>
+                            </div>
+                            <div class="modal-body" id="modal-video-apresentacao-body"></div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <?php
+            } else {
+                if (!empty($comunicados)) {
+                    foreach ($comunicados as $comunicado) {
+
+                        $dataComunicado = new \DateTime($comunicado['dt_comunicado']);
+                        $dataExpiracao = new \DateTime($comunicado['dt_expiracao']);
+                        $dataAtual = new \DateTime();
+
+                        if ($dataAtual > $dataComunicado && $dataAtual < $dataExpiracao) {
+
+                            if ($comunicado['id_tipo_comunicado'] == $configList['id_tipo_comunicado_video']) {
+                                ?>
+
+                                <script>
+
+                                    $(function () {
+
+                                        $.ajax({
+                                            type: "post",
+                                            dataType: "text",
+                                            cache: false,
+                                            url: '/mcnetwork-rede/view-video-apresentacao',
+                                            async: true,
+                                            data: {
+                                                cod: '<?= $comunicado['tx_comunicado'] ?>'
+                                            },
+                                            success: function (data) {
+
+                                                $('#modal-video-apresentacao-body').html(data);
+                                                $('#modal-video-apresentacao').modal('show');
+                                            }
+                                        });
+                                        $('#modal-video-apresentacao').on('hidden.bs.modal', function () {
+                                            $('#modal-video-apresentacao-body').html('');
+                                        });
+                                    });
+                                </script>
+
+                                <div class="modal fade" id="modal-video-apresentacao">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span></button>
+                                                <h4 class="modal-title">Video de Apresentação</h4>
+                                            </div>
+                                            <div class="modal-body" id="modal-video-apresentacao-body"></div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <?php
+                            } elseif ($comunicado['id_tipo_comunicado'] == $configList['id_tipo_comunicado_texto']) {
+                                ?>
+                                <script>
+                                    $(function () {
+                                        $('#modal-video-apresentacao').modal('show');
+
+                                        $('#modal-video-apresentacao').on('hidden.bs.modal', function () {
+                                            $('#modal-video-apresentacao-body').html('');
+                                        });
+                                    });
+                                </script>
+                                <div class="modal fade" id="modal-video-apresentacao">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span></button>
+                                                <h4 class="modal-title">Informativo</h4>
+                                            </div>
+                                            <div class="modal-body" id="modal-video-apresentacao-body">
+                                                <?= $comunicado['tx_comunicado'] ?>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> 
+                                <?php
+                            }
+                            break;
+                        }
+                    }
+                }
+                ?>
+                <?php
+            }
+        }
+        ?>
+    </div>
+
+    <div class="modal fade" id="modal-course-information">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span></button>
+                    <h4 class="modal-title">Tenha acesso a todos os cursos!</h4>
+                </div>
+                <div class="modal-body" id="modal-course-information-body"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal-course-reenvio-email">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span></button>
+                    <h4 class="modal-title">Re-envio de e-mail de confirmação de cadastro</h4>
+                </div>
+                <div class="modal-body" id="modal-view-pay-body">
+                    <div class="bs-callout bs-callout-success">
+                        <span class="glyphicon glyphicon-exclamation-sign"></span>
+                        E-mail de confirmação de cadastro enviado com sucesso.                
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" id="btn-fechar-view-pay">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <?=
+    $this->partial('partials/menu-left', [
+        'auth' => $auth,
+        'contratoEntity' => $contratoEntity,
+        'configList' => $configList,
+        'meusGanhosList' => $meusGanhosList,
+        'mensalidadeFoiPaga' => $mensalidadeFoiPaga,
+        'comunicados' => $comunicados,
+    ]);
+    ?>
+</div>

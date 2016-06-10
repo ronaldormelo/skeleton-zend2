@@ -1,0 +1,155 @@
+<?php
+if (date('N') == 1) {
+    ?>
+
+    <link rel="stylesheet" href="/assets/compact-css/jquery.tablesorter.theme.bootstrap.css,jquery.tablesorter.pager.css">
+
+    <div class="row">
+        <div class="col-md-12 ">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    Valor total de arrecadação entre <?= $dateInicial ?> e <?= $dateFinal ?>: <b>R$ <?= \Estrutura\Helpers\Valor::reais($valorArrecadadoParaDivisao); ?></b>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <?= $configList['divisao_lucro'] ?>% do valor arrecadado entre <?= $dateInicial ?> e <?= $dateFinal ?>: <b>R$ <?= \Estrutura\Helpers\Valor::reais($valorFinalArrecadadoParaDivisao); ?></b>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <?= $configList['divisao_lucro_2'] ?>% para os <?= $qtdUsuariosIndicou ?> usuários ativos que indicaram 1 ou 2 pessoas: <b>R$ <?= \Estrutura\Helpers\Valor::reais($valorSugeridoPagamentoUnitario); ?></b>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="form-inline">                
+                    <div class="col-md-8">
+                        <form name="divisaoform" class="form-inline" data-toggle="validator" id="divisaoform">
+                            <div class="form-group">
+                                <label for="valor_a_pagar_2">Valor a pagar por usuário:</label>                        
+                                <input type="text" 
+                                       class="form-control" 
+                                       name="valor_a_pagar_2" 
+                                       id="valor_a_pagar_2"                                            
+                                       required="required" 
+                                       data-mask="000.000,00"
+                                       data-mask-reverse="true"
+                                       data-error="Campo é obrigatório." 
+                                       value="<?= \Estrutura\Helpers\Valor::reais($valorSugeridoPagamentoUnitario) ?>">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="btn-toolbar">     
+                            <div class="btn-group">      
+                                <button type="button" class="btn btn-primary" id="btnPagarDivisao2"
+                                        title="Pagar">
+                                    <span class="glyphicon glyphicon-ok"></span> Pagar
+                                </button>                       
+                            </div>                        
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <!--TABELA RESUMO GERAL-->
+            <table class="table table-striped" id="tablesorterDivisao2">
+                <thead>
+                    <tr>
+                        <th class="text-center">Nº</th>
+                        <th class="text-center">Contrato</th>
+                        <th class="text-center">Nome</th>
+                        <th class="text-center">Email</th>
+                        <th class="text-center">Telefone</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th class="text-center">Nº</th>
+                        <th class="text-center">Contrato</th>
+                        <th class="text-center">Nome</th>
+                        <th class="text-center">Email</th>
+                        <th class="text-center">Telefone</th>
+                    </tr>
+                    <tr>
+                        <th colspan="5" class="ts-pager form-horizontal">
+                            <button type="button" class="btn first">
+                                <i class="icon-step-backward glyphicon glyphicon-step-backward"></i>
+                            </button>
+                            <button type="button" class="btn prev">
+                                <i class="icon-arrow-left glyphicon glyphicon-backward"></i>
+                            </button>
+                            <span class="pagedisplay"></span> <!-- this can be any element, including an input -->
+                            <button type="button" class="btn next">
+                                <i class="icon-arrow-right glyphicon glyphicon-forward"></i>
+                            </button>
+                            <button type="button" class="btn last">
+                                <i class="icon-step-forward glyphicon glyphicon-step-forward"></i>
+                            </button>
+                            <select class="pagesize input-mini" title="Selecione o número de linhas">
+                                <option selected="selected" value="100">100</option>
+                                <option value="200">200</option>
+                                <option value="300">300</option>
+                                <option value="400">400</option>
+                            </select>
+                            <select class="pagenum input-mini" title="Selecione o número da página"></select>
+                        </th>
+                    </tr>
+                </tfoot>
+                <?php
+                $totalLinhas = 0;
+                $valorTotal = 0;
+                if (!empty($listUsuariosIndicou)) {
+                    ?>
+                    <tbody class="">
+                        <?php
+                        foreach ($listUsuariosIndicou as $key => $usuario) {
+
+                            $totalLinhas++;
+                            $valorTotal += $valorSugeridoPagamentoUnitario;
+                            ?>
+                            <tr>
+                                <td class="text-center"><?= $totalLinhas ?></td>
+                                <td class="text-center">"<?= \Estrutura\Helpers\Cript::encCod($usuario['id_contrato']) ?>"</td>
+                                <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($usuario['nm_usuario']) ?></td>
+                                <td class="text-center"><?= $usuario['em_email'] ?></td>
+                                <td class="text-center"><?= \Estrutura\Helpers\Telefone::telefoneMask($usuario['nr_ddd_telefone'] . $usuario['nr_telefone']) ?></td>
+                            </tr>                    
+                            <?php
+                        }
+                        ?>
+                    </tbody>
+                    <?php
+                }
+                ?>
+            </table>                    
+            <div class="row">
+                <div class="col-md-4">
+                    Total de usuários: <b><?= $totalLinhas; ?></b>
+                </div>
+                <div class="col-md-4">
+                    Total pago: <b>R$ <?= \Estrutura\Helpers\Valor::reais($valorTotal); ?></b>
+                </div>
+                <div class="col-md-4">
+                    <b><?= date("d/m/Y H:i:m"); ?></b>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/assets/compact-js/moment.js,bootstrap-datetimepicker.min.js,validator.min.js,jquery.mask.min.js,jquery.ui.widget.js,jquery.tablesorter.js,jquery.tablesorter.widgets.js,jquery.tablesorter.pager.js,mc-network|divisao|divisao2.js" type="text/javascript"></script>
+    <?php
+} else {
+    ?>
+    <div class="row">
+        <div class="col-12 col-sm-12 col-lg-12">
+            <div class="bs-callout bs-callout-danger">
+                <span class="glyphicon glyphicon-exclamation-sign"></span>
+                É possível realizar divisão de lucros somente nas segundas-feiras.
+            </div>
+        </div>        
+    </div>
+    <?php
+}
+?>

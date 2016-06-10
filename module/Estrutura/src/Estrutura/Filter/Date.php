@@ -1,0 +1,1 @@
+<?phpnamespace Estrutura\Filter;use Zend\Filter\AbstractFilter;class Date extends AbstractFilter{    public function filter($value)    {        return \DateTime::createFromFormat('d/m/Y', $value)->format('Y-m-d');    }}

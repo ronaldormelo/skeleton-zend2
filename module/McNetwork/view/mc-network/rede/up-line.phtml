@@ -1,0 +1,500 @@
+<link href="/assets/compact-css/mc-network|rede|up-line.css,mc-network|cursos|list.css,mc-network|rede|list-ativacao.css" rel="stylesheet" />
+<input type="hidden" name="id_empresa_recusar" id="id_empresa_recusar" />
+<br />
+<?php
+if (!empty($solicitacoesUsuarioSolicitado)) {
+    ?>
+    <div class="col-12 col-sm-12 col-lg-12">
+        <div class="bs-callout bs-callout-info">
+            <span class="glyphicon glyphicon-exclamation-sign"></span>
+            <b>Atenção:</b>
+            <?php
+            foreach ($solicitacoesUsuarioSolicitado as $solicitacao) {
+                ?>    
+                <br />
+                O contrato <b>"<?= \Estrutura\Helpers\Cript::encCod($solicitacao['id_contrato_solicitante']) ?>"</b>                
+                lhe solicitou um link/código de cadastro na empresa <b><?= $solicitacao['nm_empresa']; ?></b>. 
+                Se ainda não tem um link/código de recomendação, click na aba da empresa <b><?= $solicitacao['nm_empresa']; ?></b> e solicite um! 
+                <?php
+            }
+            if (!$mensalidadeFoiPaga) {
+                ?>
+                <br>
+                <b>Realize o pagamento da mensalidade para ter acesso ao sistema.</b>
+                <?php
+            }
+            ?>
+        </div>
+    </div>  
+    <?php
+}
+?>
+<div class="scroller scroller-left"><i class="glyphicon glyphicon-chevron-left"></i></div>
+<div class="scroller scroller-right"><i class="glyphicon glyphicon-chevron-right"></i></div>
+<div class="wrapper">
+    <ul class="nav nav-tabs list" role="tablist">
+        <li class="active">
+            <a href="#mc-network-tab" role="tab" data-toggle="tab">
+                <img src="/assets/img/logo/logo-aba.png">
+            </a>
+        </li>
+        <?php
+        if ($mensalidadeFoiPaga) {
+
+            foreach ($empresasUsuario as $key => $empresaUsuario) {
+
+                if ($empresaUsuario['id_situacao_empresa_contrato'] == $configList['situacao_empresa_contrato_ativo'] ||
+                        $empresaUsuario['id_situacao_empresa_contrato'] == $configList['situacao_empresa_contrato_congelado']) {
+                    ?>
+                    <li>
+                        <a href="#<?= $key ?>-tab" role="tab" data-toggle="tab" title="<?= $empresaUsuario['nm_empresa'] ?>">
+                            <img src="<?= $empresaUsuario['ar_logo'] ?>">
+                        </a>
+                    </li>
+                    <?php
+                }
+            }
+        }
+        ?>
+    </ul>
+</div>
+<div class="tab-content">
+    <div class="tab-pane active" id="mc-network-tab">
+        <div class="row">
+            <div class="DocumentList">
+                <ul class="list-inline">
+                    <?php
+                    $videosApresentacao = json_decode(trim($codigoVideoApresentacao), true);
+                    foreach ($videosApresentacao as $key => $videoApresentacao) {
+                        ?>
+                        <li class="DocumentItem">
+                            <div class="col-12 col-sm-12 col-lg-12">
+                                <a href="#" value="<?= $videoApresentacao ?>" class="abrir-modal-video-apresentacao">                           
+                                    <img src="/assets/img/videos/<?= $videoApresentacao ?>.jpg" class="img-thumbnail" style="width: 330px;" />
+                                </a>
+                            </div>
+                        </li>
+                        <?php
+                    }
+                    ?>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-6 col-6 content">
+            <h3>Quem te recomendou: </h3>
+            <?php
+            foreach ($listIndicador as $key => $indicador) {
+                ?>
+                <table class="table-condensed">
+                    <tbody>
+                        <tr>
+                            <td class="pull-right"><h6><b>Nome: </b></h6></td>
+                            <td><h6><b><?= \Estrutura\Helpers\String::nomeMaiusculo($indicador['nm_usuario']) ?></b></h6></td>
+                        </tr>
+                        <tr>
+                            <td class="pull-right"><h6><b>E-mail: </b></h6></td>
+                            <td>
+                                <h6>
+                                    <a href="mailto:<?= $indicador['em_email'] ?>"><?= $indicador['em_email'] ?></a>
+                                </h6>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="pull-right"><h6><b>Telefone: </b></h6></td>
+                            <td>
+                                <h6>
+                                    <a href="tel:<?= \Estrutura\Helpers\Telefone::telefoneMask($indicador['nr_ddd_telefone'] . $indicador['nr_telefone']) ?>">
+                                        <?= \Estrutura\Helpers\Telefone::telefoneMask($indicador['nr_ddd_telefone'] . $indicador['nr_telefone']) ?>
+                                    </a>
+                                </h6>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <?php
+                break;
+            }
+            ?>
+        </div>
+        <div class="col-md-6 col-6 content">
+            <h3>Seu Upline: </h3>
+            <?php
+            foreach ($listUpLine as $key => $upLine) {
+                ?>
+                <table class="table-condensed">
+                    <tbody>
+                        <tr>
+                            <td class="pull-right"><h6><b>Nome: </b></h6></td>
+                            <td><h6><b><?= \Estrutura\Helpers\String::nomeMaiusculo($upLine['nm_usuario']) ?></b></h6></td>
+                        </tr>
+                        <tr>
+                            <td class="pull-right"><h6><b>E-mail: </b></h6></td>
+                            <td>
+                                <h6>
+                                    <a href="mailto:<?= $upLine['em_email'] ?>">
+                                        <?= $upLine['em_email'] ?>
+                                    </a>
+                                </h6>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="pull-right"><h6><b>Telefone: </b></h6></td>
+                            <td>
+                                <h6>
+                                    <a href="tel:<?= \Estrutura\Helpers\Telefone::telefoneMask($upLine['nr_ddd_telefone'] . $upLine['nr_telefone']) ?>">
+                                        <?= \Estrutura\Helpers\Telefone::telefoneMask($upLine['nr_ddd_telefone'] . $upLine['nr_telefone']) ?>
+                                    </a>
+                                </h6>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <?php
+                break;
+            }
+            ?>
+        </div>
+    </div>
+    <?php
+    if ($mensalidadeFoiPaga) {
+        foreach ($empresasUsuario as $key => $empresaUsuario) {
+            if ($empresaUsuario['id_situacao_empresa_contrato'] == $configList['situacao_empresa_contrato_ativo'] ||
+                    $empresaUsuario['id_situacao_empresa_contrato'] == $configList['situacao_empresa_contrato_congelado']) {
+                ?>
+                <div class="tab-pane" id="<?= $key ?>-tab">
+                    <div class="row">                        
+                        <div class="col-md-12 col-12 content">
+
+                            <div class="row">
+                                <div class="DocumentList">
+                                    <ul class="list-inline">
+                                        <?php
+                                        foreach ($empresaUsuario['videos'] as $key => $video) {
+                                            if ($video['id_situacao'] == $configList['situacao_ativo']) {
+                                                ?>
+                                                <li class="DocumentItem">
+                                                    <div class="col-12 col-sm-12 col-lg-12 content">
+                                                        <a href="#" value="<?= $video['ar_video'] ?>" class="abrir-modal-video">
+                                                            <img src="/assets/img/videos/<?= $video['ar_video'] ?>.jpg" class="img-thumbnail" style="width: 330px;" />
+                                                        </a>
+                                                    </div>
+                                                </li>
+                                                <?php
+                                            }
+                                        }
+                                        ?>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 col-12">
+                                    <?php
+                                    //Está vinculado ao usuário pai
+                                    if ($empresaUsuario['id_usuario_pai']) {
+                                        ?>    
+                                        <center>
+                                            <h3><?= $empresaUsuario['tx_slogan']; ?></h3>
+                                        </center> 
+                                        <br />
+                                        <?= $empresaUsuario['tx_descricao'] ?>
+                                        <br />
+                                        <p class="pull-right">
+                                            <a href="<?= $empresaUsuario['ur_dominio'] ?>" target="_blank">Saiba mais...</a>
+                                        </p>
+                                        <br />
+                                        <br />
+                                        <br />
+                                        <center>
+                                            <p><b>O link de cadastro de quem te recomendou é o:</b></p>
+                                        </center>
+                                        <?php
+                                        if ($empresaUsuario['bl_tem_codigo']) {
+                                            ?>
+                                            <center>
+                                                <h5>
+                                                    <a target="_blank" href="<?= $empresaUsuario['ur_link'] ?>">
+                                                        <?= $empresaUsuario['ur_link'] ?>
+                                                    </a>
+                                                </h5>
+                                                <h3>
+                                                    ID: <?= $empresaUsuario['ur_link_empresa_pai'] ?>
+                                                </h3>
+                                            </center>
+                                            <?php
+                                            if ($empresaUsuario['ur_link_empresa']) {
+                                                if ($empresaUsuario['id_situacao_empresa_contrato'] == $configList['situacao_empresa_contrato_congelado']) {
+                                                    ?>
+                                                    <center>
+                                                        <div class="col-12 col-sm-12 col-lg-12 content">
+                                                            <div class="bs-callout bs-callout-success">
+                                                                <span class="glyphicon glyphicon-exclamation-sign"></span>
+                                                                Seu ID está em análise e será liberado dentro de alguns minutos.
+                                                            </div>
+                                                        </div>
+                                                    </center>
+                                                    <?php
+                                                } elseif ($empresaUsuario['id_situacao_empresa_contrato'] == $configList['situacao_empresa_contrato_ativo']) {
+                                                    ?>
+                                                    <center>
+                                                        <div class="col-12 col-sm-12 col-lg-12 content">
+                                                            <div class="bs-callout bs-callout-success">                                                            
+                                                                Seu ID da empresa <b><?= $empresaUsuario['nm_empresa'] ?></b> é o:<br>
+                                                                <h2><?= $empresaUsuario['ur_link_empresa'] ?></h2>
+                                                                <p>Ele já está disponível para os usuários da sua rede.</p>
+                                                            </div>
+                                                        </div>
+                                                    </center>
+                                                    <?php
+                                                }
+                                            } else {
+                                                ?>
+                                                <center>
+                                                    <div class="div_enviar_id col-12 col-sm-12 col-lg-12 content" >
+                                                        <p>Após se cadastrar na empresa <b><?= $empresaUsuario['nm_empresa'] ?></b> informe o ID de seu cadastro.</p>
+                                                        <p>Esse ID ficará disponível para os usuários da sua rede.</p>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <div class="row">
+                                                                        <div class="col-md-9">
+                                                                            <input name="tx_id<?= $empresaUsuario['id_empresa_as_contrato'] ?>"
+                                                                                   class="form-control tx_id" required="required" placeholder="Seu ID"
+                                                                                   data-error="Campo é obrigatório." value="" type="text">
+                                                                            <div class="help-block with-errors tx_id_error"></div>
+                                                                            <input name="cod_empresa<?= $empresaUsuario['id_empresa_as_contrato'] ?>" 
+                                                                                   class="cod_empresa" 
+                                                                                   value="<?= Estrutura\Helpers\Cript::enc($empresaUsuario['id_empresa']) ?>" type="hidden">
+                                                                        </div>
+                                                                        <div class="col-md-3">
+                                                                            <button class="btn btn-primary btn_enviar_id">
+                                                                                <i class="glyphicon glyphicon-ok"></i>
+                                                                                <span>Enviar</span>                                                                            
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>                                                            
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </center>
+                                                <?php
+                                            }
+                                        } else {
+                                            ?>
+                                            <center>
+                                                <h5>
+                                                    <b>
+                                                        <a target="_blank" href="<?= $empresaUsuario['ur_link'] . $empresaUsuario['ur_link_empresa_pai'] ?>">
+                                                            <?= $empresaUsuario['ur_link'] . $empresaUsuario['ur_link_empresa_pai']; ?>
+                                                        </a>
+                                                    </b>
+                                                </h5>
+                                            </center>
+                                            <?php
+                                            if ($empresaUsuario['ur_link_empresa']) {
+                                                if ($empresaUsuario['id_situacao_empresa_contrato'] == $configList['situacao_empresa_contrato_congelado']) {
+                                                    ?>
+                                                    <center>
+                                                        <div class="col-12 col-sm-12 col-lg-12 content">
+                                                            <div class="bs-callout bs-callout-success">
+                                                                <span class="glyphicon glyphicon-exclamation-sign"></span>
+                                                                Seu link está em análise e será liberado dentro de alguns minutos.
+                                                            </div>
+                                                        </div>
+                                                    </center>
+                                                    <?php
+                                                } elseif ($empresaUsuario['id_situacao_empresa_contrato'] == $configList['situacao_empresa_contrato_ativo']) {
+                                                    ?>
+                                                    <center>
+                                                        <div class="col-12 col-sm-12 col-lg-12 content">
+                                                            <div class="bs-callout bs-callout-success">
+                                                                Seu link da empresa <b><?= $empresaUsuario['nm_empresa'] ?></b> é o:<br>
+                                                                <h4>
+                                                                    <b>
+                                                                        <a href="<?= $empresaUsuario['ur_link'] . $empresaUsuario['ur_link_empresa'] ?>" target="_blank" >
+                                                                            <?= $empresaUsuario['ur_link'] . $empresaUsuario['ur_link_empresa'] ?>
+                                                                        </a>
+                                                                    </b>
+                                                                </h4>.
+                                                                <p>Ele já está disponível para os usuários da sua rede.</p>
+                                                            </div>
+                                                        </div>
+                                                    </center>
+                                                    <?php
+                                                }
+                                            } else {
+                                                ?>
+                                                <center>
+                                                    <div class="col-12 col-sm-12" id="div_solicitar_patrocinador">
+                                                        <div class="div_enviar_id col-12 col-sm-12 col-lg-12 content">
+                                                            <p>Após se cadastrar na empresa <b><?= $empresaUsuario['nm_empresa'] ?></b> informe o link de seu cadastro.</p>
+                                                            <p>Esse link ficará disponível para os usuários da sua rede.</p>
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <div class="row">
+                                                                            <div class="col-md-9">
+                                                                                <input name="tx_id<?= $empresaUsuario['id_empresa_as_contrato'] ?>" 
+                                                                                       class="form-control tx_id" required="required" placeholder="Seu ID"
+                                                                                       data-error="Campo é obrigatório." value="" type="text">
+                                                                                <div class="help-block with-errors tx_id_error"></div>
+                                                                                <input name="cod_empresa<?= $empresaUsuario['id_empresa_as_contrato'] ?>" 
+                                                                                       class="cod_empresa"
+                                                                                       value="<?= Estrutura\Helpers\Cript::enc($empresaUsuario['id_empresa']) ?>" type="hidden">
+                                                                            </div>
+                                                                            <div class="col-md-3">
+                                                                                <button class="btn btn-primary btn_enviar_id">
+                                                                                    <i class="glyphicon glyphicon-ok"></i>
+                                                                                    <span>Enviar</span>                                                                            
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>                                                            
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="div_enviar_id col-12 col-sm-12 col-lg-12 content">
+                                                            <p>Você ainda pode recusar essa empresa:</p>
+                                                            <div class="col-md-12">
+                                                                <span class="btn btn-danger btn_recusar_patrocinador" value="<?= \Estrutura\Helpers\Cript::enc($empresaUsuario['id_empresa']) ?>">
+                                                                    <i class="glyphicon glyphicon-ban-circle"></i>
+                                                                    <span>Recusar</span>                                                                            
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </center>
+                                                <?php
+                                            }
+                                        }
+                                    } else {
+                                        ?>
+
+                                        <center>
+                                            <h3><?= $empresaUsuario['tx_slogan']; ?></h3>
+                                        </center>                            
+                                        <br>
+                                        <p><?= $empresaUsuario['tx_descricao'] ?></p>
+                                        <p class="pull-right">
+                                            <a href="<?= $empresaUsuario['ur_dominio'] ?>" target="_blank">Saiba mais...</a>
+                                        </p>
+                                        <br>
+                                        <br>
+                                        <br>
+                                        <?php
+                                        //verificar se o usuario atual solicitou convite                                
+                                        $solicitacaoSolicitante = FALSE;
+                                        if (!empty($solicitacoesUsuarioSolicitante)) {
+                                            foreach ($solicitacoesUsuarioSolicitante as $solicitacao) {
+                                                if ($solicitacao['id_empresa'] == $empresaUsuario['id_empresa']) {
+                                                    $solicitacaoSolicitante = TRUE;
+                                                }
+                                            }
+                                        }
+                                        if ($solicitacaoSolicitante) {
+                                            ?>                        
+                                            <center>
+                                                <div class="col-12 col-sm-12 col-lg-12 content">
+                                                    <div class="bs-callout bs-callout-success">
+                                                        <b>Você solicitou uma recomendação!</b><br>
+                                                        Dentro de algumas horas será disponibilizado um link/código de quem te recomendou para realizar o cadastro.
+                                                    </div>
+                                                </div>
+                                            </center>
+                                            <?php
+                                        } else {
+                                            ?>
+                                            <center>
+                                                <div class="div_solicitar_patrocinador" id="div_solicitar_patrocinador">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <span class="btn btn-primary btn_solicitar_patrocinador" value="<?= \Estrutura\Helpers\Cript::enc($empresaUsuario['id_empresa']) ?>">
+                                                                <i class="glyphicon glyphicon-chevron-right"></i>
+                                                                <span>Solicitar Recomendação</span>                                                                            
+                                                            </span>
+                                                        </div>
+                                                        <?php
+                                                        $qtdSolicitacaoEmpresa = 0;
+                                                        if (!empty($solicitacoesUsuarioSolicitado)) {
+                                                            foreach ($solicitacoesUsuarioSolicitado as $solicitacao) {
+                                                                if ($solicitacao['id_empresa'] == $empresaUsuario['id_empresa']) {
+                                                                    $qtdSolicitacaoEmpresa++;
+                                                                }
+                                                            }
+                                                        }
+                                                        if ($qtdSolicitacaoEmpresa >= 2) {
+                                                            ?>
+                                                            <div class="col-md-6 pull-right">
+                                                                <span class="btn btn-danger btn_recusar_patrocinador" value="<?= \Estrutura\Helpers\Cript::enc($empresaUsuario['id_empresa']) ?>">
+                                                                    <i class="glyphicon glyphicon-ban-circle"></i>
+                                                                    <span>Recusar</span>                                                                            
+                                                                </span>
+                                                            </div>
+                                                            <?php
+                                                        }
+                                                        ?>
+                                                    </div>         
+                                                </div>
+                                            </center>
+                                            <br>
+                                            <?php
+                                        }
+                                    }
+                                    ?>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>      
+                </div>      
+                <?php
+            }
+        }
+    }
+    ?>
+    <br>
+</div>
+
+<div class="modal fade" id="modal-video-apresentacao">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span></button>
+                <h4 class="modal-title">Video de Apresentação</h4>
+            </div>
+            <div class="modal-body" id="modal-video-apresentacao-body"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-confirm-recusar-patrocinador">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Fechar</span></button>
+                <h4 class="modal-title">Recusar Empresa</h4>
+            </div>
+            <div class="modal-body" id="modal-confirm-recusar-patrocinador-body">
+                Essa ação é irreversível e você não terá mais acesso a essa empresa.<br>                
+                Você pode estar perdendo a oportunidade de gerar lucros.<br><br>
+                Deseja Realmente recusar essa empresa?<br>         
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">
+                    <i class="glyphicon glyphicon-chevron-left"></i>
+                    Voltar
+                </button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal" id="btn_confirm_recusar_patrocinador">
+                    <i class="glyphicon glyphicon-ban-circle"></i>
+                    Recusar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/assets/compact-js/mc-network|rede|up-line.js" type="text/javascript"></script>

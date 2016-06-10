@@ -1,0 +1,178 @@
+<link rel="stylesheet" href="/assets/compact-css/jquery.tablesorter.theme.bootstrap.css,jquery.tablesorter.pager.css,bootstrap-datetimepicker.min.css">
+
+<div class="row">
+    <div class="col-md-12 ">
+        <div class="row">
+            <div class="form-inline">
+                <div class="col-md-4">
+                    <div class="form-group datetimepicker">
+                        <label for="dt_inicio">Início:</label>
+                        <input type="text" name="dt_inicio" 
+                               id="dt_inicio" 
+                               class="form-control" 
+                               data-mask="00/00/0000" 
+                               data-date-format="DD/MM/YYYY" 
+                               required="required" 
+                               data-error="Campo é obrigatório." 
+                               value="<?= $dtInicio ?>" 
+                               maxlength="10" autocomplete="off">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group datetimepicker">
+                        <label for="dt_fim">Fim:</label>
+                        <input type="text" name="dt_fim" 
+                               id="dt_fim" 
+                               class="form-control" 
+                               data-mask="00/00/0000" 
+                               data-date-format="DD/MM/YYYY" 
+                               required="required" 
+                               data-error="Campo é obrigatório." 
+                               value="<?= $dtFim ?>" 
+                               maxlength="10" autocomplete="off">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="btn-toolbar">   
+                        <div class="btn-group">      
+                            <button type="button" class="btn btn-primary" id="filtrarRelatorioSaquesPagos"
+                                    title="Filtrar">
+                                <span class="glyphicon glyphicon-search"></span> Filtrar
+                            </button>                        
+                            <button type="button" class="btn btn-default" id="limparRelatorioSaquesPagos"
+                                    title="Limpar" aria-label="Left Align">
+                                <span class="glyphicon glyphicon glyphicon-repeat"></span> Limpar
+                            </button>
+                            <button type="button" class="btn btn-default" id="imprimirRelatorioSaquesPagos"
+                                    title="Imprimir">
+                                <span class="glyphicon glyphicon-print"></span> Imprimir
+                            </button>                       
+                        </div>                        
+                    </div>                        
+                </div>
+            </div>
+        </div>
+        <br>
+        <!--TABELA RESUMO GERAL-->
+        <div class="table-responsive">
+            <table class="table table-striped" id="tablesorterSaquesPagos">
+                <thead>
+                    <tr>
+                        <th class="text-center">Nº</th>
+                        <th class="text-center" title="Referência">Ref.</th>
+                        <th class="text-center">Mês</th>
+                        <th class="text-center">Pagamento</th>
+                        <th class="text-center">Valor</th>
+                        <th class="text-center">Contrato</th>
+                        <th class="text-center">Nome</th>
+                        <th class="text-center">Recibo</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th class="text-center">Nº</th>
+                        <th class="text-center" title="Referência">Ref.</th>
+                        <th class="text-center">Mês</th>
+                        <th class="text-center">Pagamento</th>
+                        <th class="text-center">Valor</th>
+                        <th class="text-center">Contrato</th>
+                        <th class="text-center">Nome</th>
+                        <th class="text-center">Recibo</th>
+                    </tr>
+                    <tr>
+                        <th colspan="8" class="ts-pager form-horizontal">
+                            <?php
+                            echo $this->paginationControl(
+                                    $paginator, 'Sliding', 'partials/pagination.phtml', [
+                                'urlPagination' => '/mcnetwork-relatorio/relatorio-saques-pagos',
+                                'countPerPage' => $countPerPage,
+                                'divData' => '#modal-relatorio-body-3',
+                                    ]
+                            );
+                            ?>  
+                        </th>
+                    </tr>
+                </tfoot>
+                <?php
+                $numeroLinha = (($paginator->getCurrentPageNumber() - 1) * $paginator->getItemCountPerPage());
+                if (!empty($paginator)) {
+                    ?>
+                    <tbody class="">
+                        <tr role="row" class="tablesorter-filter-row">
+                            <?php
+                            foreach ($camposFilter as $key => $campoFilter) {
+                                ?>    
+                                <td>
+                                    <?php
+                                    if (!is_null($campoFilter)) {
+                                        ?>
+                                        <input type="search" placeholder="" class="tablesorter-filter" data-column="<?= $key ?>" value="<?= isset($filter[$key]) ? $filter[$key] : '' ?>">
+                                        <?php
+                                    } else {
+                                        ?>
+                                        &nbsp;                                        
+                                        <?php
+                                    }
+                                    ?>
+                                </td>
+                                <?php
+                            }
+                            ?>                            
+                        </tr>
+                        <?php
+                        foreach ($paginator as $key => $extrato) {
+
+                            $dataReferencia = new \DateTime(date('Y-m-d', strtotime($extrato['dt_mes_referencia'])));
+                            $dataPagamento = new \DateTime(date('Y-m-d', strtotime($extrato['dt_pagamento'])));
+                            $numeroLinha++;
+                            ?>
+                            <tr>
+                                <td class="text-center"><?= $numeroLinha ?></td>
+                                <td class="text-center"><?= \Estrutura\Helpers\String::preencheEsquerda($extrato['id_pagamento'], 8, '0') ?></td>
+                                <td class="text-center"><?= $dataReferencia->format('m/Y') ?></td>
+                                <td class="text-center"><?= $dataPagamento->format('d/m/Y') ?></td>
+                                <td class="text-center">R$ <?= \Estrutura\Helpers\Valor::reais($extrato['vl_pago']) ?></td>
+                                <td class="text-center">"<?= \Estrutura\Helpers\Cript::encCod($extrato['id_contrato']) ?>"</td>
+                                <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($extrato['nm_usuario']) ?></td>
+                                <td class="text-center">
+                                    <span class="btn-group" style="width: 80px;">
+                                        <?php
+                                        if ($extrato['ar_comprovante_pagamento']) {
+                                            ?>
+                                            <button type="button" class="btn btn-primary relatorio-recibo" id="relatorio-recibo-<?= $extrato['id_pagamento'] ?>" rel="<?= \Estrutura\Helpers\Cript::enc($extrato['id_pagamento']) ?>"
+                                                    title="Exibir recibo">
+                                                <span class="glyphicon glyphicon-file"></span>
+                                            </button> 
+                                            <button type="button" class="btn btn-danger relatorio-recusar-recibo" id="relatorio-recusar-recibo-<?= $extrato['id_pagamento'] ?>" rel="<?= \Estrutura\Helpers\Cript::enc($extrato['id_pagamento']) ?>"
+                                                    title="Recusar recibo">
+                                                <span class="glyphicon glyphicon-remove"></span>
+                                            </button> 
+                                            <?php
+                                        }
+                                        ?>
+                                    </span>
+                                </td>
+                            </tr>                    
+                            <?php
+                        }
+                        ?>
+                    </tbody>
+                    <?php
+                }
+                ?>
+            </table>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                Total de linhas no período: <b><?= $paginator->getTotalItemCount(); ?></b>
+            </div>
+            <div class="col-md-4">
+                Valor total no período: <b>R$ <?= \Estrutura\Helpers\Valor::reais($valorTotal); ?></b>
+            </div>
+            <div class="col-md-4">
+                <b><?= date("d/m/Y H:i:m"); ?></b>   
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/assets/compact-js/moment.js,bootstrap-datetimepicker.min.js,validator.min.js,jquery.mask.min.js,jquery.ui.widget.js,jquery.tablesorter.js,jquery.tablesorter.widgets.js,jquery.tablesorter.pager.js,mc-network|relatorio|relatorio-saques-pagos.js" type="text/javascript"></script>    

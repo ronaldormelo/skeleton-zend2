@@ -1,0 +1,61 @@
+<link rel="stylesheet" href="/assets/compact-css/jquery.tablesorter.theme.bootstrap.css,jquery.tablesorter.pager.css">
+<script src="/assets/compact-js/action|action|index.js" type="text/javascript"></script>
+<div class="page-head">
+    <h2>Action</h2>
+</div>
+<div class="cl-mcont">
+    <div class="row">
+        <div class="col-md-6">
+            <a class="btn btn-primary" title="Adicionar novo" href="<?= $this->url('navegacao',['controller' => $controller,'action' => 'cadastro'])?>">
+                Novo 
+            </a>
+        </div>
+        <div class="col-md-6 text-right">
+            <span class="btn btn-default" title="Imprimir" id="imprimir-action">
+                Imprimir 
+            </span>
+            <a href="<?= $this->url('navegacao', ['controller' => 'admin-index']) ?>" class="btn btn-default" title="Retorna para a página inicial">
+                Home
+            </a>
+        </div>
+    </div>
+    <br>
+    <div class="row" id="action-pagination"></div>
+    <div class="row">
+        <div class="col-md-6">
+            <a class="btn btn-primary" title="Adicionar novo" href="<?= $this->url('navegacao',['controller' => $controller,'action' => 'cadastro'])?>">
+                Novo 
+            </a>
+        </div>
+        <div class="col-md-6 text-right">
+            <span class="btn btn-default" title="Imprimir" id="imprimir-action">
+                Imprimir 
+            </span>
+            <a href="<?= $this->url('navegacao', ['controller' => 'admin-index']) ?>" class="btn btn-default" title="Retorna para a página inicial">
+                Home
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-action-excluir">
+    <input type="hidden" name="modal-action-excluir-id" id="modal-action-excluir-id" value="">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Fechar</span>
+                </button>
+                <h4 class="modal-title">Confirme Exclusão</h4>
+            </div>
+            <div class="modal-body">
+                Deseja realmente excluir?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-danger" id="btn-action-excluir-confirm">Sim</button>
+            </div>
+        </div>
+    </div>
+</div>

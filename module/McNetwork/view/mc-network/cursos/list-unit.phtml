@@ -1,0 +1,38 @@
+<script src="/assets/compact-js/mc-network|cursos|list-unit.js" type="text/javascript"></script>
+<br />
+<div class="col-xs-12 col-sm-12">
+
+    <div class="panel-group" id="accordion">
+        <?php
+        $idUnit = 0;
+        
+        if (!empty($listCurriculum)) {
+            foreach ($listCurriculum as $key => $curriculum) {
+                if (!is_numeric($curriculum)) {
+                    ?>
+                    <div class="panel panel-default" id="panel_unit_<?= $idUnit ?>">
+                        <div class="panel-heading collapseCurriculumUnit" title="<?= $curriculum ?>"
+                             value="<?= $idCurso . '_' . $idUnit ?>"
+                             style="cursor: pointer;"
+                             >
+                            <h4 class="panel-title">
+                                <b>
+                                    <?= $curriculum; ?>
+                                    <?php if ($conclusionUnit[$idUnit]) { ?>
+                                        <span style="color: #398439;">
+                                            <span class="glyphicon glyphicon-ok"></span>
+                                        </span>
+                                    <?php } ?>
+                                </b> 
+                            </h4>
+                        </div>
+                        <div class="panel-list-content"></div>
+                    </div>
+                    <?php
+                    $idUnit++;
+                }
+            }
+        }
+        ?>
+    </div>
+</div>

@@ -1,0 +1,44 @@
+<link rel="stylesheet" href="/assets/compact-css/jquery.tablesorter.theme.bootstrap.css,jquery.tablesorter.pager.css">
+<script src="/assets/compact-js/contrato|contrato|index.js" type="text/javascript"></script>
+<div class="page-head">
+    <h2>Contrato</h2>
+</div>
+<div class="cl-mcont">
+    <div class="row">
+        <div class="col-md-12">
+            <a class="btn btn-primary" title="Adicionar novo" href="<?= $this->url('navegacao',['controller' => $controller,'action' => 'cadastro'])?>">
+                Novo 
+            </a>
+        </div>
+    </div>
+    <br>
+    <div class="row" id="contrato-pagination"></div>
+    <div class="row">
+        <div class="col-md-12">
+            <a href="<?= $this->url('navegacao', ['controller' => 'principal-principal']) ?>" class="btn btn-primary" title="Retorna para a Página Principal">Home</a>
+            <a class="btn btn-default" href="<?= $this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro')) ?>" title="Adicionar novo">Novo</a>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade printable" id="modal-contrato-excluir">
+    <input type="hidden" name="modal-contrato-excluir-id" id="modal-contrato-excluir-id" value="">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Fechar</span>
+                </button>
+                <h4 class="modal-title">Confirme Exclusão</h4>
+            </div>
+            <div class="modal-body">
+                Deseja realmente excluir?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-danger" id="btn-contrato-excluir-confirm">Sim</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,53 @@
+<link rel="stylesheet" href="/assets/compact-css/jquery.tablesorter.theme.bootstrap.css,jquery.tablesorter.pager.css">
+<script src="/assets/compact-js/{{controller}}|{{controller}}|index.js" type="text/javascript"></script>
+<div class="cl-mcont">
+    <div class="row">
+        <div class="col-md-6">
+            <h4>{{nome}}</h4>
+        </div>
+        <div class="col-md-6 text-right">
+            <a class="btn btn-primary" title="Adicionar novo" href="<?= $this->url('navegacao',['controller' => $controller,'action' => 'cadastro'])?>">
+                Novo 
+            </a>
+            <span class="btn btn-default" title="Imprimir" id="imprimir-{{controller}}">
+                Imprimir 
+            </span>
+        </div>    
+    </div>
+    <br>
+    <div class="row" id="{{controller}}-pagination"></div>
+    <div class="row">
+        <div class="col-md-6">            
+        </div>
+        <div class="col-md-6 text-right">
+            <a class="btn btn-primary" title="Adicionar novo" href="<?= $this->url('navegacao',['controller' => $controller,'action' => 'cadastro'])?>">
+                Novo 
+            </a>
+            <span class="btn btn-default imprimir-{{controller}}" title="Imprimir">
+                Imprimir 
+            </span>            
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-{{controller}}-excluir">
+    <input type="hidden" name="modal-{{controller}}-excluir-id" id="modal-{{controller}}-excluir-id" value="">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Fechar</span>
+                </button>
+                <h4 class="modal-title">Confirmar Exclusão</h4>
+            </div>
+            <div class="modal-body">
+                Deseja realmente excluir?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" title="Cancelar">Cancelar</button>
+                <button type="button" class="btn btn-danger" id="btn-{{controller}}-excluir-confirm" title="Sim">Sim</button>
+            </div>
+        </div>
+    </div>
+</div>

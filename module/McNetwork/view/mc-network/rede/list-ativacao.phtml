@@ -1,0 +1,141 @@
+<link href="/assets/compact-css/mc-network|rede|list-ativacao.css" rel="stylesheet" />
+<input type="hidden" name="idEmpresaAsContrato" id="idEmpresaAsContrato" />
+<br>
+<div class="scroller scroller-left"><i class="glyphicon glyphicon-chevron-left"></i></div>
+<div class="scroller scroller-right"><i class="glyphicon glyphicon-chevron-right"></i></div>
+<div class="wrapper">
+    <ul class="nav nav-tabs list" role="tablist">
+        <?php
+        if (!empty($empresas)) {
+            foreach ($empresas as $key => $empresa) {
+                ?>
+                <li <?= $key == 0 ? 'class="active"' : ''; ?>>
+                    <a href="#<?= $key ?>-tab" role="tab" data-toggle="tab" title="<?= $empresa->getNmEmpresa() ?>">
+                        <img src="<?= $empresa->getArLogo() ?>">
+                    </a>
+                </li>
+                <?php
+            }
+        }
+        ?>
+    </ul>
+</div>
+<div class="tab-content">  
+    <?php
+    if (!empty($empresas)) {
+        foreach ($empresas as $key => $empresa) {
+            ?>
+            <div <?= $key == 0 ? 'class="tab-pane active"' : 'class="tab-pane"'; ?> id="<?= $key ?>-tab">
+                <div class="col-md-12 content">
+                    <br>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th class="text-center">
+                                    Nº
+                                </th>                            
+                                <th class="text-center">
+                                    Contrato
+                                </th>
+                                <th class="text-center">
+                                    Nome completo
+                                </th>
+                                <th class="text-center">
+                                    E-mail
+                                </th>
+                                <th class="text-center">
+                                    Telefone
+                                </th>
+                                <th class="text-center">
+                                    ID Empresa
+                                </th>            
+                                <th class="text-center">
+                                    Ações
+                                </th>                                        
+                            </tr>
+                        </thead>
+                        <?php
+                        if (!empty($listEmpresaAsContratos[$key])) {
+                            ?>
+                            <tbody class="">
+                                <?php
+                                foreach ($listEmpresaAsContratos[$key] as $empresaAsContrato) {
+                                    ?>
+                                    <tr>
+                                        <td class="text-center">                                        
+                                            <?= $empresaAsContrato['id_empresa_as_contrato'] ?>&nbsp;
+                                        </td>                                    
+                                        <td class="text-center">                                        
+                                            "<?= Estrutura\Helpers\Cript::encCod($empresaAsContrato['id_usuario']) ?>"&nbsp;
+                                        </td>
+                                        <td class="text-center">                                        
+                                            <?= $empresaAsContrato['nm_usuario'] ?>&nbsp;
+                                        </td>
+                                        <td class="text-center">    
+                                            <a href="mailto:<?= $empresaAsContrato['em_email'] ?>">
+                                                <?= $empresaAsContrato['em_email'] ?>
+                                            </a>&nbsp;
+                                        </td>
+                                        <td class="text-center">
+                                            <a href="tel:<?= \Estrutura\Helpers\Telefone::telefoneMask($empresaAsContrato['nr_ddd_telefone'] . $empresaAsContrato['nr_telefone']) ?>">
+                                                <?= \Estrutura\Helpers\Telefone::telefoneMask($empresaAsContrato['nr_ddd_telefone'] . $empresaAsContrato['nr_telefone']) ?>
+                                            </a>&nbsp;
+                                        </td>
+                                        <td class="text-center">                                        
+                                            <b><?= $empresaAsContrato['ur_link_empresa'] ?></b>&nbsp;
+                                        </td>                                    
+                                        <td class="text-center">                                        
+                                            <span class="btn btn-primary btn_ativar_id" id="btn_ativar_id[<?= $empresaAsContrato['id_empresa_as_contrato'] ?>]"
+                                                  value="<?= \Estrutura\Helpers\Cript::enc($empresaAsContrato['id_empresa_as_contrato']) ?>" title="Ativar ID">
+                                                <i class="glyphicon glyphicon-saved"></i>
+                                            </span>
+                                        </td>                                    
+                                    </tr>
+                                    <?php
+                                }
+                                ?>
+                            </tbody>
+                            <?php
+                        } else {
+                            ?>
+                            <tbody>
+                                <tr>
+                                    <td class="text-center" colspan="7">Nenhum registro encontrado</td>
+                                </tr>
+                            </tbody>
+                            <?php
+                        }
+                        ?>
+
+                    </table>
+                    <br>
+                </div>
+            </div>        
+            <?php
+        }
+    }
+    ?>
+</div>
+
+<div class="modal fade" id="modal-confirm-ativar-id">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Fechar</span>
+                </button>
+                <h4 class="modal-title">Ativar ID</h4>
+            </div>
+            <div class="modal-body" id="modal-confirm-recusar-patrocinador-body">
+                Deseja Realmente ativar o ID desse contrato?<br>                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" id="btn_confirm_ativar_id">Ativar ID</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal" id="btn_negar_ativar_id">Negar ID</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>                
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/assets/compact-js/mc-network|rede|list-ativacao.js" type="text/javascript"></script>

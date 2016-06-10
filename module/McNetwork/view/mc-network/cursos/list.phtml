@@ -1,0 +1,31 @@
+<script src="/assets/compact-js/mc-network|cursos|list.js" type="text/javascript"></script>
+<br />
+
+<div class="col-xs-12 col-sm-3">
+
+    <div class="panel-group" id="accordion">
+        <?php
+        if (!empty($listCursos)) {
+            foreach ($listCursos as $key => $curso) {
+                ?>
+                <div class="panel panel-default">
+                    <div class="panel-heading collapseCourseTitle" 
+                         value="<?= \Estrutura\Helpers\Cript::enc($curso['ID']) ?>" 
+                         id="CollapsibleCourse<?= $key ?>" style="cursor: pointer;" title="<?=$curso['post_title'] ?>">
+                        <h4 class="panel-title">
+                            <b>
+                                <?= $curso['post_title']; ?>
+                            </b> 
+                        </h4>
+                    </div>
+                    <div id="collapseBodyCourse<?= $key ?>" class="collapseCourse"></div>
+                </div>
+                <?php
+            }
+        }
+        ?>
+    </div>
+</div>
+<div class="col-xs-12 col-sm-9" id="course-content"></div>
+
+

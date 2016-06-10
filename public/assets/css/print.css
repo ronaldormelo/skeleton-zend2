@@ -1,0 +1,16 @@
+body * {
+    visibility:hidden;
+}
+.printSection, .printSection * {
+    visibility:visible;
+}
+.printSection {
+    position:absolute;
+    left:0;
+    top:0;
+    padding: 0;
+    margin: 0;
+}
+.img-thumbnail {
+    display: none;
+}

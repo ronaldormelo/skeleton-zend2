@@ -1,0 +1,276 @@
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css" >           
+<div class="row row-offcanvas row-offcanvas-right">
+    <div class="col-xs-12 col-sm-9">
+        <div class="well">
+            <div class="page-head">
+                <h2>Cadastro</h2>
+            </div>
+            <?php
+            $form->setAttribute('action', $this->url('navegacao', array('controller' => $controller, 'action' => 'gravar')));
+            $form->setAttribute('method', 'post');
+            $form->setAttribute('class', 'form-horizontal');
+            $form->setAttribute('data-toggle', 'validator');
+            $form->prepare();
+            echo $this->form()->openTag($form);
+            ?>
+            <div class="bs-callout bs-callout-info">
+                <h3>
+                    <!--<span class="glyphicon glyphicon-exclamation-sign"></span>-->
+                    Recomendação de <b><?= \Estrutura\Helpers\String::nomeMaiusculo($atributos['usuario']['nm_usuario']); ?></b> - Código: <b><?= $atributos['id_usuario']; ?></b>
+                </h3>
+            </div>
+            <br />
+
+            <input type="hidden" name="id_usuario_pai" value="<?= $atributos['id_usuario'] ?>" />
+
+            <div class="form-group">
+                <div class="col-md-7">
+                    <?= $this->formRow($form->get('id_perfil')) ?>
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>            
+            <div class="form-group">
+                <div class="col-md-7">
+                    <?= $this->formRow($form->get('nm_usuario')) ?>
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-7">
+                    <?= $this->formRow($form->get('em_email')) ?>
+                    <div class="help-block with-errors"></div>
+                </div>                    
+            </div>
+            <div class="form-group">
+                <div class="col-md-7">
+                    <?= $this->formRow($form->get('em_email_confirm')) ?>
+                    <div class="help-block with-errors"></div>
+                </div>                    
+            </div>
+            <div class="form-group">
+                <div class="col-md-7">
+                    <?= $this->formRow($form->get('pw_senha')) ?>
+                    <div class="help-block with-errors"></div>
+                </div>                    
+            </div>
+            <div class="form-group">
+                <div class="col-md-7">
+                    <?= $this->formRow($form->get('pw_senha_confirm')) ?>
+                    <div class="help-block with-errors"></div>
+                </div>                    
+            </div>
+            <div class="form-group">
+                <div class="col-md-7">
+                    <?= $this->formRow($form->get('nu_cpf')) ?>
+                    <div class="help-block with-errors"></div>
+                </div>                    
+            </div>
+            <div class="form-group">
+                <div class="col-md-7">
+                    <?= $this->formLabel($form->get('dt_nascimento')) ?>
+                    <div class="input-group" id="datetimepicker">
+                        <?= $this->formInput($form->get('dt_nascimento')) ?>
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>                            
+                    </div>
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-7">
+                    <?= $this->formRow($form->get('nr_telefone')) ?>
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-7">
+                    <?= $this->formRow($form->get('id_empresa')) ?>
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-7">
+                    <?= $this->formRow($form->get('captcha')); ?>
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-7">
+                    <label>
+                        <input type="checkbox" required="required" value="1" id="ckhConcordo">
+                        Li e concordo com o 
+                        <a href="/application-index/termo-utilizacao" target="_blank" id="linkTermoUtilizacao">Termo de Utilização do Serviço</a>
+                        <span id="spanContratoCredenciamentoVenda">e o 
+                            <a href="/application-index/contrato" target="_blank" id="linkContratoVenda">Contrato de Venda de Produtos</a>
+                        </span>.
+                    </label>                            
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-10">
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                    <a href="<?= $this->url('navegacao', ['controller' => 'auth', 'action' => 'login']) ?>" class="btn btn-default">Voltar</a>                    
+                </div>
+            </div>
+            <?= $this->form()->closeTag(); ?>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-termo-uso">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Termo de Utilização do Serviço</h3>
+            </div>
+            <div class="modal-body" id="modal-termo-uso-body">
+                <p class="text-justify">
+                    Ao utilizar o sistema MC Network Cursos On-Line ("MC Network" ou "sistema"), o Usuário, concorda e adere a todas as condições destes termos de Uso ("Termos"), tornando-se pessoalmente responsável por sua observância.
+                </p>
+                <h4>
+                    Licença de uso do sistema
+                </h4>
+                <p class="text-justify">A MC Network concedeu, por meio de contrato específico, licença de utilização do sistema em favor do Usuário. Em nenhuma situação é permitida a transferência, empréstimo, sublicenciamento, aluguel, permuta, enfim, qualquer forma de cessão, sublicença ou comercialização do sistema.</p>
+                <h4>Propriedade intelectual e reprodução</h4>
+                <p class="text-justify">Cópia do Software e Conteúdo - É expressamente proibida a duplicação, cópia ou reprodução, no todo ou em parte, do sistema ou conteúdo ou de sua respectiva documentação técnica, bem como a simples tentativa de desvendar o código-objeto do sistema por mecanismos de engenharia reversa ou quaisquer outros. Os conteúdos dos cursos distribuídos inicialmente no sistema são de propriedade intelectual da MC Network, estendendo-se aos mesmos o previsto nesta cláusula e nas cláusulas "LICENÇA DE USO DO SISTEMA" e "PROTEÇÃO" destes Termos.</p>
+                <p class="text-justify">Links para site de terceiros - Na MC Network Cursos On-Line existem links para outros sites de conteúdo que não estão sob o controle da MC Network. Nestes casos, a MC Network não se responsabiliza pela confiabilidade de qualquer dado, opinião, recomendação, ou práticas de sites de terceiros.</p>
+                <p class="text-justify">Marcas e ícones de terceiros - A apresentação de marcas ou logo de padrões (CPE – Common Platform Enumeration e CCE – Common Configuration Enumeration) é usada apenas como referência de que o MC Network suporta os padrões definidos pelos criadores de tais padrões. Os ícones apresentados na MC Network constituem propriedade de famfamfam e seu uso está amparado por licença da <a href="http://www.creativecommons.org/" target="_blank">Creative Commons</a>.</p>
+                <h4>Proteção</h4>
+                <p class="text-justify">A MC Network desenvolveu e é detentora exclusiva dos direitos de autor e quaisquer outros direitos de propriedade intelectual sobre o sistema e sua documentação técnica. A licença de uso do sistema não implica em permissão para vender o sistema ou para de qualquer forma transmitir quaisquer direitos sobre o mesmo, e sim apenas na aquisição do direito de uso da do sistema acessado pelo Usuário, que somente poderá ser exercido durante a vigência da licença de uso. Em nenhuma hipótese, os avisos contidos no sistema referentes à propriedade intelectual poderão ser removidos ou modificados.</p>
+                <h4>Garantia</h4>
+                <p class="text-justify">A MC Network assegura as garantias previstas na licença de uso do sistema concedida ao Usuário.</p>
+                <h4>Término da licença e interrupção de uso</h4>
+                <p class="text-justify">A licença de uso vigorará a partir da data de sua assinatura até que seja cancelada por qualquer das partes - MC Network ou Usuário -, de acordo com os termos e condições estabelecidos na licença de uso.</p>
+                <h4>Responsabilidades da MC Network</h4>
+                <p class="text-justify">As responsabilidades da MC Network em relação ao sistema e aos serviços de manutenção são exclusivamente as previstas na licença de uso.</p>
+                <h4>Responsabilidades legais do Usuário</h4>
+                <p class="text-justify">A violação da licença de uso e/ou destes Termos sujeitam o Usuário a todas as responsabilidades cíveis e criminais previstas na legislação aplicável. O desconhecimento das obrigações legais e/ou contratuais não isentará a parte infratora de tal responsabilização. A cooperação do Usuário na prevenção de infrações contratuais, ou na imediata informação à MC Network sobre sua ocorrência e tomada de medidas corretivas adequadas, será considerada fundamental para evitar responsabilidades por negligência ou omissão.</p>
+                <h4>Informação Suficiente</h4>
+                <p class="text-justify">O Usuário, em seu nome reconhece que o acesso eletrônico a estes Termos, previamente ao acesso ao sistema, será considerado como condição válida e eficaz para ciência e observância, para todos os fins e efeitos.</p>
+                <h4>Condições Gerais</h4>
+                <p class="text-justify">A licença de uso prevalecerá sobre o conteúdo destes Termos, em caso de quaisquer dúvidas ou conflitos. Estes Termos obrigam as partes e seus herdeiros ou sucessores a qualquer título. O Usuário não poderá ceder a terceiros seus direitos decorrentes destes Termos. Estes Termos são regidos pelas leis brasileiras. Fica eleito o foro central da comarca de Brasília, Distrito federal como o único competente para dirimir as questões decorrentes dos presentes Termos, com renúncia expressa a qualquer outro, por mais privilegiado que seja.</p>
+                <h4>Isenção de Responsabilidade</h4>
+                <p class="text-justify">A MC Network não será responsável por qualquer dano, perda ou responsabilidade de qualquer natureza decorrentes da utilização ou incapacidade de usar este sistema, ou os serviços, ou conteúdos fornecidos a partir e através dele. Além disso, a MC Network não garante que este sistema e outros documentos ou produtos aos quais este sistema faz referência funcionem sem interrupções, sejam precisos ou livres de erros ou omissões.</p>
+                <p class="text-justify">A menos que expressamente especificado de outra forma em um acordo entre o Usuário e a MC Network, o sistema e todas as informações pertinentes a estes Termos são fornecidos "no estado", sem quaisquer garantias ou condições, expressas ou implícitas, incluindo mas sem limitação, garantias de qualidade satisfatória ou adequação a determinada finalidade.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Concordo</button>                
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-termo-uso-contrato">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Termo de Utilização do Serviço</h3>
+            </div>
+            <div class="modal-body" id="modal-termo-uso-contrato-body">
+                <p class="text-justify">
+                    Ao utilizar o sistema MC Network Cursos On-Line ("MC Network" ou "sistema"), o Usuário, concorda e adere a todas as condições destes termos de Uso ("Termos"), tornando-se pessoalmente responsável por sua observância.
+                </p>
+                <h4>
+                    Licença de uso do sistema
+                </h4>
+                <p class="text-justify">A MC Network concedeu, por meio de contrato específico, licença de utilização do sistema em favor do Usuário. Em nenhuma situação é permitida a transferência, empréstimo, sublicenciamento, aluguel, permuta, enfim, qualquer forma de cessão, sublicença ou comercialização do sistema.</p>
+                <h4>Propriedade intelectual e reprodução</h4>
+                <p class="text-justify">Cópia do Software e Conteúdo - É expressamente proibida a duplicação, cópia ou reprodução, no todo ou em parte, do sistema ou conteúdo ou de sua respectiva documentação técnica, bem como a simples tentativa de desvendar o código-objeto do sistema por mecanismos de engenharia reversa ou quaisquer outros. Os conteúdos dos cursos distribuídos inicialmente no sistema são de propriedade intelectual da MC Network, estendendo-se aos mesmos o previsto nesta cláusula e nas cláusulas "LICENÇA DE USO DO SISTEMA" e "PROTEÇÃO" destes Termos.</p>
+                <p class="text-justify">Links para site de terceiros - Na MC Network Cursos On-Line existem links para outros sites de conteúdo que não estão sob o controle da MC Network. Nestes casos, a MC Network não se responsabiliza pela confiabilidade de qualquer dado, opinião, recomendação, ou práticas de sites de terceiros.</p>
+                <p class="text-justify">Marcas e ícones de terceiros - A apresentação de marcas ou logo de padrões (CPE – Common Platform Enumeration e CCE – Common Configuration Enumeration) é usada apenas como referência de que o MC Network suporta os padrões definidos pelos criadores de tais padrões. Os ícones apresentados na MC Network constituem propriedade de famfamfam e seu uso está amparado por licença da <a href="http://www.creativecommons.org/" target="_blank">Creative Commons</a>.</p>
+                <h4>Proteção</h4>
+                <p class="text-justify">A MC Network desenvolveu e é detentora exclusiva dos direitos de autor e quaisquer outros direitos de propriedade intelectual sobre o sistema e sua documentação técnica. A licença de uso do sistema não implica em permissão para vender o sistema ou para de qualquer forma transmitir quaisquer direitos sobre o mesmo, e sim apenas na aquisição do direito de uso da do sistema acessado pelo Usuário, que somente poderá ser exercido durante a vigência da licença de uso. Em nenhuma hipótese, os avisos contidos no sistema referentes à propriedade intelectual poderão ser removidos ou modificados.</p>
+                <h4>Garantia</h4>
+                <p class="text-justify">A MC Network assegura as garantias previstas na licença de uso do sistema concedida ao Usuário.</p>
+                <h4>Término da licença e interrupção de uso</h4>
+                <p class="text-justify">A licença de uso vigorará a partir da data de sua assinatura até que seja cancelada por qualquer das partes - MC Network ou Usuário -, de acordo com os termos e condições estabelecidos na licença de uso.</p>
+                <h4>Responsabilidades da MC Network</h4>
+                <p class="text-justify">As responsabilidades da MC Network em relação ao sistema e aos serviços de manutenção são exclusivamente as previstas na licença de uso.</p>
+                <h4>Responsabilidades legais do Usuário</h4>
+                <p class="text-justify">A violação da licença de uso e/ou destes Termos sujeitam o Usuário a todas as responsabilidades cíveis e criminais previstas na legislação aplicável. O desconhecimento das obrigações legais e/ou contratuais não isentará a parte infratora de tal responsabilização. A cooperação do Usuário na prevenção de infrações contratuais, ou na imediata informação à MC Network sobre sua ocorrência e tomada de medidas corretivas adequadas, será considerada fundamental para evitar responsabilidades por negligência ou omissão.</p>
+                <h4>Informação Suficiente</h4>
+                <p class="text-justify">O Usuário, em seu nome reconhece que o acesso eletrônico a estes Termos, previamente ao acesso ao sistema, será considerado como condição válida e eficaz para ciência e observância, para todos os fins e efeitos.</p>
+                <h4>Condições Gerais</h4>
+                <p class="text-justify">A licença de uso prevalecerá sobre o conteúdo destes Termos, em caso de quaisquer dúvidas ou conflitos. Estes Termos obrigam as partes e seus herdeiros ou sucessores a qualquer título. O Usuário não poderá ceder a terceiros seus direitos decorrentes destes Termos. Estes Termos são regidos pelas leis brasileiras. Fica eleito o foro central da comarca de Brasília, Distrito federal como o único competente para dirimir as questões decorrentes dos presentes Termos, com renúncia expressa a qualquer outro, por mais privilegiado que seja.</p>
+                <h4>Isenção de Responsabilidade</h4>
+                <p class="text-justify">A MC Network não será responsável por qualquer dano, perda ou responsabilidade de qualquer natureza decorrentes da utilização ou incapacidade de usar este sistema, ou os serviços, ou conteúdos fornecidos a partir e através dele. Além disso, a MC Network não garante que este sistema e outros documentos ou produtos aos quais este sistema faz referência funcionem sem interrupções, sejam precisos ou livres de erros ou omissões.</p>
+                <p class="text-justify">A menos que expressamente especificado de outra forma em um acordo entre o Usuário e a MC Network, o sistema e todas as informações pertinentes a estes Termos são fornecidos "no estado", sem quaisquer garantias ou condições, expressas ou implícitas, incluindo mas sem limitação, garantias de qualidade satisfatória ou adequação a determinada finalidade.</p>
+                <br>
+                <h3>Contrato de Venda de Produtos</h3>
+                <p class="text-justify">
+                    <span>DE UM LADO: M.C DE SA LIMA - EPP, CPNJ 08.988.565/0001-30 situada à Sia TR 05 LT 05 35 SALA 211 ED. IMPORT CENTER GUARA, autorizada a vender os produtos da marca MC NETWORK e tendo o total direito do uso comercial da marca, doravante denominada simplesmente MC NETWORK e de outro na qualidade de REVENDEDOR AMBULANTE AUTÔNOMO, a seguir designado como PROMOTOR, melhor qualificado(a) na proposta de revenda, constante no anverso, resolvem celebrar o presente INSTRUMENTO PARTICULAR DE CONTRATO DE REVENDA DE PRODUTOS DA MARCA MC NETWORK, que se regerá pelas normas estatuídas na legislação brasileira, e de acordo com as condições gerais, conforme segue:</span>
+                </p>
+                <p class="text-justify">
+                    <span>O PROMOTOR, deverá filiar-se a MC NETWORK, mediante a oposição da assinatura no formulário de proposta de divulgação e venda no anverso deste contrato, e será submetido à aprovação do seu crédito.</span>
+                </p>
+                <p class="text-justify">
+                    <span>Aprovado o crédito a que aduz o item anterior e efetuada a compra do produto (cursos on-line) pelo PROMOTOR fica ajustado o direito de revenda de produtos da marca MC NETWORK (curso on-line).</span>
+                </p>
+                <p class="text-justify">
+                    <span>Neste ato, o PROMOTOR declara estar ciente de todas as regras do MANUAL DO NEGÓCIO MC NETWORK, obrigando-se a cumpri-las na integralidade, especialmente, com aquela que determina o pagamento da mensalidade do curso mensal para manter a renovação deste Contrato de revenda.</span>
+                </p>
+                <p class="text-justify">
+                    <span>O presente contrato obriga as partes, seus herdeiros e sucessores.</span>
+                </p>
+                <p class="text-justify">
+                    <span>O PROMOTOR, observado o disposto neste contrato, tem ampla liberdade de conduzir suas atividades da forma que melhor lhe convier e, nesse sentido, poderá a seu exclusivo critério exercer outras atividades remuneradas ou não, com ou sem vínculo empregatício e, com total independência de horários, roteiros, ordens ou subordinações em razão da MC NETWORK.</span>
+                </p>
+                <p class="text-justify">
+                    <span>O PROMOTOR concorda que a assinatura deste contrato e a compra do produto (cursos on-line) são os requisitos necessários para tornar-se um PROMOTOR. Pelo presente contrato o PROMOTOR reconhece ter recebido a disponibilização dos cursos on-line.</span>
+                </p>
+                <p class="text-justify">
+                    <span>O PROMOTOR poderá revender livremente os produtos (cursos on-line) por ele adquiridos da MC NETWORK, sem qualquer delimitação de região. Os preços e condições são definido no sistema da MC NETWORK.</span>
+                </p>
+                <p class="text-justify">
+                    <span>O PROMOTOR não poderá, expor o conteúdo ou exibir o produto comprado pela mesma, comercializado do sistema MC NETWORK.</span>
+                </p>
+                <p class="text-justify">
+                    <span>O PROMOTOR, a seu livre critério, poderá adquirir produtos MC NETWORK a qualquer tempo, se tornando revendedor.</span>
+                </p>
+                <p class="text-justify">
+                    <span>Os preços dos produtos da marca MC NETWORK, para revenda ao PROMOTOR, serão aqueles vigentes na data da requisição.</span>
+                </p>
+                <p class="text-justify">
+                    <span>O pagamento dos produtos MC NETWORK comprados pelo PROMOTOR E CLIENTES será sempre a vista.</span>
+                </p>
+                <p class="text-justify">
+                    <span>Fica expressamente vedado ao PROMOTOR assumir quaisquer compromissos ou obrigações em nome da MC NETWORK, sob pena das medidas judiciais cabíveis.</span>
+                </p>
+                <p class="text-justify">
+                    <span>Compromete-se o PROMOTOR:</span>
+                <div>A) Apresentar e revender os produtos comercializado pela MC NETWORK;</div>
+                <div>b) Não reproduzir, não desenvolver ou criar e nem tão pouco permitir a reprodução, desenvolvimento ou criação por qualquer meio, de materiais impressos ou gravados com a marca MC NETWORK, bem como ficam proibidas, as fixações ou colocações de cartazes, banners e afins com o nome MC NETWORK em ruas, avenidas e praças de qualquer localidade do território nacional ou do exterior.</div>
+                </p>
+                <p class="text-justify">
+                    <span>Fica estipulado que a MC NETWORK poderá a seu exclusivo critério suspender e/ ou rescindir de pleno direito o presente contrato, se o PROMOTOR cometer práticas que firam qualquer das cláusulas do presente contrato ou do Manual do Negócio MC NETWORK. </span>
+                </p>
+                <p class="text-justify">
+                    <span>Este contrato não estabelece entre as partes, nenhuma forma de sociedade, associação, agência, consórcio ou responsabilidade solidária, devendo o PROMOTOR responder por quaisquer obrigações junto a terceiros, órgãos públicos, autarquias, etc.</span>
+                </p>
+                <p class="text-justify">
+                    <span>As partes se comprometem a enviar, tão logo tenham conhecimento, uma a outra, comunicação escrita, sobre quaisquer acontecimentos que envolvam ou comprometam o cumprimento de qualquer uma das cláusulas deste Contrato. </span>
+                </p>
+                <p class="text-justify">
+                    <span>Fica expressamente vedada a utilização das marcas, sinais de propaganda e demais elementos de propriedade da MC NETWORK pelo PROMOTOR, salvo com autorização expressa da MC NETWORK.</span>
+                </p>
+                <p class="text-justify">
+                    <span>O PROMOTOR autoriza durante a vigência deste contrato à MC NETWORK usar seu nome, fotografia, história pessoal e/ou qualquer fonte de referência para produção de materiais promocionais e de propaganda, desistindo de qualquer direito à remuneração pelo seu uso.</span>
+                </p>
+                <p class="text-justify">
+                    <span>É em benefício mútuo do negócio do PROMOTOR, bem como da MC NETWORK e de seus demais Distribuidores Independentes, que há uma uniformidade nas normas, e, elas refletem a prática que melhor capacita o crescimento de todos esses negócios. Assim, o PROMOTOR concorda que a MC NETWORK pode alterar a qualquer tempo, as regras contidas nos Manuais do Negócio MC NETWORK, de Procedimentos Operacionais e de Treinamento, bem como no Sistema de Marketing, sendo que a única comunicação necessária para isso é a publicação de eventual alteração no site da MC NETWORK. A MC NETWORK observará um prazo de 30 dias para aplicar qualquer eventual alteração, a contar da data de publicação no site.</span>
+                </p>
+                <p class="text-justify">
+                    <span>O PROMOTOR não poderá ceder ou transferir, total ou parcialmente, este contrato a terceiros, sem prévio consentimento da MC NETWORK. </span>
+                </p>
+                <p class="text-justify">
+                    <span>As partes elegem o Foro da Comarca de Brasília, Distrito federal, para dirimir quaisquer dúvidas decorrentes do presente Contrato, renunciando a qualquer outro por mais privilegiados que seja.</span>
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Concordo</button>                
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/assets/compact-js/moment.js,bootstrap-datetimepicker.min.js,validator.min.js,jquery.mask.min.js,jquery.complexify.js,usuario|usuario|cadastro.js" type="text/javascript"></script>

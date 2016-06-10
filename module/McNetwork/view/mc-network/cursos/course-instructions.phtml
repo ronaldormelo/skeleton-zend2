@@ -1,0 +1,54 @@
+<div class="panel panel-primary">
+    <div class="panel-heading" 
+         id="" style="cursor: pointer;" title="">
+        <h4 class="panel-title">
+            <b>
+                Apresentação do curso
+            </b> 
+        </h4>
+    </div>
+    <div class="col-12 col-xs-12">
+        <br>
+        <?php
+        if ($message) {
+            ?>
+            <div class="bs-callout bs-callout-info">
+                <span class="glyphicon glyphicon-exclamation-sign"></span>
+                <?php echo $message; ?>
+            </div>
+            <?php
+        }
+        ?>
+
+        <?= $courseInstruction ?>
+
+        <br>
+        <br>
+        <div class="row">
+            <div class="col-12 col-xs-12 text-center">
+
+                <?php
+                if (!is_null($idContent)) {
+                    ?>
+                    <button id="btn-continuar-curso" class="btn btn-primary" rel="<?= \Estrutura\Helpers\Cript::enc($idCurso . '_' . $idContent) ?>">
+                        <i class="glyphicon glyphicon-play"></i>
+                        <?php
+                        if ($courseStarts) {
+
+                            echo 'Iniciar curso';
+                        } else {
+
+                            echo 'Continuar curso';
+                        }
+                        ?>
+                    </button>
+                    <?php
+                }
+                ?>
+            </div>
+        </div>
+        <br>
+    </div>
+</div>
+
+<script src="/assets/compact-js/mc-network|cursos|course-instructions.js" type="text/javascript"></script>

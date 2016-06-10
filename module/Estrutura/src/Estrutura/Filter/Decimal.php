@@ -1,0 +1,1 @@
+<?phpnamespace Estrutura\Filter;use Zend\Filter\AbstractFilter;class Decimal extends AbstractFilter{    public function filter($value)    {        return (float) trim(str_replace(',', '.', (str_replace('.', '', $value))));    }}

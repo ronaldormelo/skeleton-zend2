@@ -1,0 +1,52 @@
+<br />
+<div class="col-md-12 content">
+    <div class="row">
+        <div class="col-md-12">
+            <button type="button" class="btn btn-primary" id="btn-cadastrar-comunicado">Cadastrar Comunicado</button>
+        </div>
+    </div>
+    <br />
+
+    <div class="table-responsive" >
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th class="text-center">Título</th> 
+                    <th class="text-center">Comunicado</th> 
+                    <th class="text-center">Data comunicado</th> 
+                    <th class="text-center">Data Expiração</th> 
+                    <th class="text-center">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <?php
+                foreach ($lista as $item) {
+
+                    $dataComunicado = new \DateTime($item->getDtComunicado());
+                    $dataExpiracao = new \DateTime($item->getDtExpiracao());
+                    ?>
+                    <tr>
+                        <td><?= $item->getNmTituloComunicado() ?></td> 
+                        <td><?= \Estrutura\Helpers\String::limitaCaracteres($item->getTxComunicado(), 100) ?></td> 
+                        <td><?= $dataComunicado->format('d/m/y H:i:s') ?></td> 
+                        <td><?= $dataExpiracao->format('d/m/y H:i:s') ?></td> 
+                        <td style="width: 150px;" class="text-center">
+                            <a class="btn-editar-comunicado btn btn-primary" title="Editar"
+                               style="cursor: pointer;"
+                               value="<?= \Estrutura\Helpers\Cript::enc($item->getId()) ?>">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                            </a>
+                            <a class="btn-excluir-comunicado btn btn-danger" title="Excluir"
+                               style="cursor: pointer;"
+                               value="<?= \Estrutura\Helpers\Cript::enc($item->getId()) ?>">
+                                <span class="glyphicon glyphicon-remove-sign"></span>
+                            </a>
+                        </td>
+                    </tr>
+                <?php }; ?>
+            </tbody>
+        </table>
+    </div>
+</div>
+<script src="/assets/compact-js/comunicado|comunicado|index.js" type="text/javascript"></script>

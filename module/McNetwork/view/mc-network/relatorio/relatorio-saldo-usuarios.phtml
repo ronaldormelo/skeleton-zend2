@@ -1,0 +1,195 @@
+<link rel="stylesheet" href="/assets/compact-css/jquery.tablesorter.theme.bootstrap.css,jquery.tablesorter.pager.css,bootstrap-datetimepicker.min.css">
+
+<div class="row">
+    <div class="col-md-12 ">        
+        <br>
+        <!--TABELA RESUMO GERAL-->
+        <div class="table-responsive">
+            <table class="table table-striped" id="tablesorterSaldoUsuarios">
+                <thead>
+                    <tr>
+                        <td class="text-center">Contrato</td>
+                        <td class="text-center">Nome</td>
+                        <td class="text-center">Crédito (R$)</td>
+                        <td class="text-center">Débito (R$)</td>
+                        <td class="text-center">Crédito X Débito (R$)</td>
+                        <td class="text-center">Saldo Contrato (R$)</td>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <td class="text-center">Contrato</td>
+                        <td class="text-center">Nome</td>
+                        <td class="text-center">Crédito (R$)</td>
+                        <td class="text-center">Débito (R$)</td>
+                        <td class="text-center">Crédito X Débito (R$)</td>
+                        <td class="text-center">Saldo Contrato (R$)</td>
+                    </tr>
+                    <tr>
+                        <th colspan="7" class="ts-pager form-horizontal">
+                            <button type="button" class="btn first">
+                                <i class="icon-step-backward glyphicon glyphicon-step-backward"></i>
+                            </button>
+                            <button type="button" class="btn prev">
+                                <i class="icon-arrow-left glyphicon glyphicon-backward"></i>
+                            </button>
+                            <span class="pagedisplay"></span> <!-- this can be any element, including an input -->
+                            <button type="button" class="btn next">
+                                <i class="icon-arrow-right glyphicon glyphicon-forward"></i>
+                            </button>
+                            <button type="button" class="btn last">
+                                <i class="icon-step-forward glyphicon glyphicon-step-forward"></i>
+                            </button>
+                            <select class="pagesize input-mini" title="Selecione o número de linhas">
+                                <option selected="selected" value="100">100</option>
+                                <option value="200">200</option>
+                                <option value="300">300</option>
+                                <option value="400">400</option>
+                            </select>
+                            <select class="pagenum input-mini" title="Selecione o número da página"></select>
+                        </th>
+                    </tr>
+                </tfoot>
+                <?php
+                $totalLinhas = 0;
+                $totalDebitoEmpresa = 0;
+                $totalDebitoAtivoEmpresa = 0;
+                $totalDebitoRealizadoEmpresa = 0;
+                $totalCreditoRealizadoEmpresa = 0;
+
+                bcscale(10);
+
+                if (!empty($listUsuarios)) {
+                    ?>
+                    <tbody class="">
+                        <?php
+                        foreach ($listUsuarios as $key => $usuarioEntity) {
+
+                            $totalCredito = 0;
+                            $totalDebito = 0;
+                            $totalSaldo = 0;
+
+                            $totalLinhas++;
+
+                            $contratoEntity = $listContrato[$key];
+
+                            foreach ($listExtrato[$key] as $extrato) {
+
+                                $classCredito = NULL;
+                                $classDebito = NULL;
+                                $styleCredito = NULL;
+                                $styleDebito = NULL;
+
+                                switch ($extrato['id_tipo_pagamento']) {
+
+                                    case $configList['tipo_pagamento_mensalidade']:
+                                        if ((strpos($extrato['ar_comprovante_pagamento'], $configList['tipo_pagamento_mensalidade_bonus']) !== false) &&
+                                                $extrato['id_contrato_origem_pagamento'] == $contratoEntity['id_contrato']) {
+
+                                            $totalDebito = bcadd($totalDebito, $extrato['vl_documento']);
+                                            $totalSaldo = bcsub($totalSaldo, $extrato['vl_documento']);
+                                        }
+                                        break;
+                                    case $configList['tipo_pagamento_bonus']:
+
+                                        $totalCredito = bcadd($totalCredito, $extrato['vl_documento']);
+                                        $totalSaldo = bcadd($totalSaldo, $extrato['vl_documento']);
+                                        break;
+
+                                    case $configList['tipo_pagamento_saque']:
+                                        if ($extrato['id_situacao_pagamento'] == $configList['situacao_pagamento_pago']) {
+
+                                            $totalDebito = bcadd($totalDebito, $extrato['vl_documento']);
+                                            $totalSaldo = bcsub($totalSaldo, $extrato['vl_documento']);
+
+                                            $totalDebitoRealizadoEmpresa = bcadd($totalDebitoRealizadoEmpresa, $extrato['vl_documento']);
+                                        }
+                                        break;
+                                    case $configList['tipo_pagamento_expiracao']:
+                                        if ($extrato['id_situacao_pagamento'] == $configList['situacao_pagamento_pago']) {
+
+                                            $totalDebito = bcadd($totalDebito, $extrato['vl_documento']);
+                                            $totalSaldo = bcsub($totalSaldo, $extrato['vl_documento']);
+
+                                            $totalDebitoRealizadoEmpresa = bcadd($totalDebitoRealizadoEmpresa, $extrato['vl_documento']);
+                                        }
+                                        break;
+                                    default:
+                                        $descricao = '';
+                                        $title = '';
+                                        $situacao = NULL;
+                                        $credito = NULL;
+                                        $debito = NULL;
+                                        $vencimento = NULL;
+                                        $pagamento = NULL;
+                                        $comprovante = NULL;
+                                        $classCredito = NULL;
+                                        $classDebito = NULL;
+                                        break;
+                                }
+                            }
+
+                            $totalDebitoEmpresa = bcadd($totalDebitoEmpresa, $totalSaldo);
+
+                            if ($totalSaldo > $configList['limite_minimo_saque']) {
+
+                                $totalDebitoAtivoEmpresa = bcadd($totalDebitoAtivoEmpresa, $totalSaldo);
+                            }
+
+                            $cor = '';
+                            $vlSaldo = isset($contratoEntity['vl_saldo']) ? $contratoEntity['vl_saldo'] : 0;
+                            if ($totalSaldo != $vlSaldo) {
+                                $cor = 'style=color:red;';
+                            }
+                            ?>    
+                            <tr>
+                                <td class="text-center">"<?= \Estrutura\Helpers\Cript::encCod($contratoEntity['id_contrato']); ?>"</td>
+                                <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($usuarioEntity->getNmUsuario()) ?></td>
+                                <td class="text-center" style="color:#428BCA"><b><?= \Estrutura\Helpers\Valor::reais($totalCredito) ?></b></td>
+                                <td class="text-center" style="color:#A94442"><b><?= \Estrutura\Helpers\Valor::reais($totalDebito) ?></b></td>
+                                <td class="text-center" <?= $cor ?>><b><?= \Estrutura\Helpers\Valor::reais($totalSaldo) ?></b></td>
+                                <td class="text-center" <?= $cor ?>><b><?= \Estrutura\Helpers\Valor::reais($vlSaldo) ?></b></td>
+                            </tr>
+                            <?php
+                        }
+                        ?>
+                    </tbody>
+                    <?php
+                }
+
+                if (!empty($listPagamentosRecebidosPaginator)) {
+                    foreach ($listPagamentosRecebidosPaginator as $extrato) {
+                        $totalCreditoRealizadoEmpresa = bcadd($totalCreditoRealizadoEmpresa, $extrato['vl_pago']);
+                    }
+                }
+                ?>
+            </table>
+        </div>
+        <div class="row">
+            <div class="col-md-12" title="Débito realizado através de solicitações de saques">
+                Débito realizado: <b>R$ <?= \Estrutura\Helpers\Valor::reais($totalDebitoRealizadoEmpresa); ?></b>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12" title="Débito previsto para a empresa">
+                Débito previsto: <b>R$ <?= \Estrutura\Helpers\Valor::reais($totalDebitoEmpresa); ?> ( <?= \Estrutura\Helpers\Valor::reais($totalDebitoAtivoEmpresa); ?> )</b>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12" title="Crédito realizados através de pagamentos de boleto">
+                Crédito realizado (Faturamento): <b>R$ <?= \Estrutura\Helpers\Valor::reais($totalCreditoRealizadoEmpresa); ?></b>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12" title="Lucro">
+                Lucro: <b>R$ <?= \Estrutura\Helpers\Valor::reais(bcsub($totalCreditoRealizadoEmpresa, bcadd($totalDebitoRealizadoEmpresa, $totalDebitoEmpresa))); ?></b>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <b><?= date("d/m/Y H:i:m"); ?></b>   
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/assets/compact-js/moment.js,bootstrap-datetimepicker.min.js,validator.min.js,jquery.mask.min.js,jquery.ui.widget.js,jquery.tablesorter.js,jquery.tablesorter.widgets.js,jquery.tablesorter.pager.js,mc-network|relatorio|relatorio-saldo-usuarios.js" type="text/javascript"></script>

@@ -1,0 +1,71 @@
+<div class="navbar-default sidebar" role="navigation">
+    <div class="sidebar-nav navbar-collapse">
+        <ul class="nav" id="side-menu">
+            <?php
+            foreach ($this->container as $page) {
+
+                if ($this->navigation('navigation')->accept($page)) {
+
+                    $liClass = '';
+
+                    if ($page->isActive()) {
+
+                        $liClass = ' class="active"';
+                    }
+                    if ($page->getChildren()) {
+                        ?>
+                        <li>
+                            <a href="<?= $page->getHref() ?>" >
+                                <!-- <i class="fa fa-table fa-fw"></i> -->
+                                <?= $page->getLabel() ?>
+                                <span class="fa arrow"></span>
+                            </a>                                         
+                            <ul class="nav nav-second-level">
+                                <?php
+                                $page->rewind();
+                                while ($page->valid()) {
+                                    if ($this->navigation('navigation')->accept($page->current())) {
+                                        ?>
+                                        <li>                                     
+                                            <?= $this->navigation('navigation')->menu()->htmlify($page->current()) ?>
+                                        </li>
+                                        <?php
+                                    }
+                                    $page->next();
+                                }
+                                ?>
+                            </ul>
+                        </li>
+                        <?php
+                    } else {
+                        ?>
+                        <li>
+                            <a href="<?= $page->getHref() ?>" >
+                                <!-- <i class="fa fa-table fa-fw"></i> -->
+                                <?= $page->getLabel() ?>
+                            </a>
+                        </li>
+                        <?php
+                    }
+                }
+            }
+            ?>
+            <!--            
+            <li class="sidebar-search">
+                <div class="input-group custom-search-form">
+                    <input type="text" class="form-control" placeholder="Search...">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </span>
+                </div>
+                 /input-group 
+            </li>
+            -->
+
+        </ul>
+    </div>
+    <!-- /.sidebar-collapse -->
+</div>
+<!-- /.navbar-static-side -->

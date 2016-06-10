@@ -1,0 +1,53 @@
+<link rel="stylesheet" href="/assets/compact-css/jquery.tablesorter.theme.bootstrap.css,jquery.tablesorter.pager.css">
+<script src="/assets/compact-js/cidade|cidade|index.js" type="text/javascript"></script>
+<div class="cl-mcont">
+    <div class="row">
+        <div class="col-md-6">
+            <h4>Cidade</h4>
+        </div>
+        <div class="col-md-6 text-right">
+            <a class="btn btn-primary" title="Adicionar novo" href="<?= $this->url('navegacao',['controller' => $controller,'action' => 'cadastro'])?>">
+                Novo 
+            </a>
+            <span class="btn btn-default" title="Imprimir" id="imprimir-cidade">
+                Imprimir 
+            </span>
+        </div>    
+    </div>
+    <br>
+    <div class="row" id="cidade-pagination"></div>
+    <div class="row">
+        <div class="col-md-6">            
+        </div>
+        <div class="col-md-6 text-right">
+            <a class="btn btn-primary" title="Adicionar novo" href="<?= $this->url('navegacao',['controller' => $controller,'action' => 'cadastro'])?>">
+                Novo 
+            </a>
+            <span class="btn btn-default imprimir-cidade" title="Imprimir">
+                Imprimir 
+            </span>            
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-cidade-excluir">
+    <input type="hidden" name="modal-cidade-excluir-id" id="modal-cidade-excluir-id" value="">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Fechar</span>
+                </button>
+                <h4 class="modal-title">Confirmar Exclusão</h4>
+            </div>
+            <div class="modal-body">
+                Deseja realmente excluir?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-danger" id="btn-cidade-excluir-confirm">Sim</button>
+            </div>
+        </div>
+    </div>
+</div>
