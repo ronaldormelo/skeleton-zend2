@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="pt-BR">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="shortcut icon" href="/assets/img/ico/ico-32x32.ico" />
+
+        <title><?= $this->Config('nome_projeto') ?></title>
+
+        <script src="/assets/compact-js/jquery.min.js,template|<?= $this->Config('tema') ?>|bootstrap.min.js,ie-emulation-modes-warning.js,transition.js,collapse.js,template|<?= $this->Config('tema') ?>|customizado.js" type="text/javascript"></script>
+
+        <link href="/assets/compact-css/template|<?= $this->Config('tema') ?>|bootstrap.css,callout.css,offcanvas.css,template|<?= $this->Config('tema') ?>|bootstrap-theme.css" rel="stylesheet" />
+
+        <link href="/assets/compact-css/print.css" rel="stylesheet" media="print" />
+
+<!--[if lt IE 9]><script src="../../assets/compact-js/ie8-responsive-file-warning.js" type="text/javascript"></script><![endif]-->        
+    </head>
+    <body>
+
+        <div class="navbar navbar-fixed-top navbar-default" role="navigation">
+            <div class="container">          
+                <?= $this->render('layout/' . $this->Config('tema') . '/top') ?>                    
+            </div>
+        </div>
+        <div class="container">
+
+            <div class="row" role="navigation">
+                <div class="col-6">
+                    <?= $this->render('layout/' . $this->Config('tema') . '/mensagens') ?> 
+                </div>
+                <div class="col-6">
+                    <?php
+                    //   $this->navigation('navigation')->breadcrumbs()
+                    //   ->setMinDepth(0)->setPartial('partials/' . $this->Config('tema') . '/breadcrumb.phtml')
+                    ?>
+                </div>
+            </div>
+
+            <?= $this->content ?>
+
+            <hr />
+
+            <?= $this->render('layout/' . $this->Config('tema') . '/footer') ?>
+        </div>
+    </body>
+</html>

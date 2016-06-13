@@ -1,0 +1,18 @@
+SELECT * FROM controller WHERE nm_controller = '{{tabela}}';
+
+INSERT INTO controller (nm_controller) VALUES ('{{tabela}}');
+
+INSERT INTO perfil_controller_action (
+  id_controller,
+  id_action,
+  id_perfil
+) 
+VALUES
+  ({{id_controller}}, 1, 1),
+  ({{id_controller}}, 2, 1),
+  ({{id_controller}}, 3, 1),
+  ({{id_controller}}, 4, 1),
+  ({{id_controller}}, 5, 1),  
+  ({{id_controller}}, 6, 1);
+  
+

@@ -49,7 +49,7 @@ $(function () {
         }
     });
 
-    $("#imprimir-usuario").click(function () {
+    $(".imprimir-usuario").click(function () {
 
         var divPrint = $('.divPrint');
         $('#printSection').addClass('printSection');

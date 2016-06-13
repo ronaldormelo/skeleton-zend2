@@ -47,12 +47,14 @@ return array(
             array(
                 'label' => 'Cidade',
                 'route' => 'navegacao',
-                'controller' => 'cidade',                
+                'controller' => 'cidade',      
+                'resource' => 'cidade/index',
                 'pages' => array(
                     array(
                         'label' => 'Listar',
                         'route' => 'navegacao',
-                        'controller' => 'cidade',                       
+                        'controller' => 'cidade',
+                        'resource' => 'cidade/index',
                     ),
                     array(
                         'label' => 'Novo',

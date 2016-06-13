@@ -1,5 +1,7 @@
 <?php
+
 namespace Estrutura\Helpers;
+
 /**
  *
  * @author anonymous
@@ -74,6 +76,21 @@ class Arquivo {
 
         $nomeArray = explode(".", $nomeArquivo);
         return strtolower(end($nomeArray));
+    }
+
+    /**
+     * 
+     * @param type $directory
+     * @return type
+     */
+    public static function delTree($directory) {
+
+        $files = array_diff(scandir($directory), array('.', '..'));
+
+        foreach ($files as $file) {
+            (is_dir("$directory/$file")) ? self::delTree("$directory/$file") : unlink("$directory/$file");
+        }
+        return rmdir($directory);
     }
 
 }

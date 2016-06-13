@@ -47,12 +47,14 @@ return array(
             array(
                 'label' => '{{namespace}}',
                 'route' => 'navegacao',
-                'controller' => '{{route}}',                
+                'controller' => '{{route}}',      
+                'resource' => '{{route}}/index',
                 'pages' => array(
                     array(
                         'label' => 'Listar',
                         'route' => 'navegacao',
-                        'controller' => '{{route}}',                       
+                        'controller' => '{{route}}',
+                        'resource' => '{{route}}/index',
                     ),
                     array(
                         'label' => 'Novo',

@@ -1,0 +1,9 @@
+<?=
+
+        $this->navigation('navigation')
+        ->setAcl($this->acl)
+        ->setRole($this->role)
+        ->menu(null, ['minDepth' => 0, 'maxDepth' => 0, 'onlyActiveBranch' => false, 'renderParents' => false])
+        ->setPartial(array('layout/' . $this->Config('tema') . '/partials/menu.phtml', 'default'))
+        ->render();
+?>

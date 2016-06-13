@@ -6,9 +6,16 @@
             <h4>Cidade</h4>
         </div>
         <div class="col-md-6 text-right">
+            <?php
+            if ($this->layout()->acl->hasResource($controller . '/cadastro') &&
+                    $this->layout()->acl->isAllowed($this->layout()->role, $controller . '/cadastro')) {
+                ?>
             <a class="btn btn-primary" title="Adicionar novo" href="<?= $this->url('navegacao',['controller' => $controller,'action' => 'cadastro'])?>">
                 Novo 
             </a>
+                <?php
+            }
+            ?>
             <span class="btn btn-default" title="Imprimir" id="imprimir-cidade">
                 Imprimir 
             </span>
@@ -20,9 +27,16 @@
         <div class="col-md-6">            
         </div>
         <div class="col-md-6 text-right">
+            <?php
+            if ($this->layout()->acl->hasResource($controller . '/cadastro') &&
+                    $this->layout()->acl->isAllowed($this->layout()->role, $controller . '/cadastro')) {
+                ?>
             <a class="btn btn-primary" title="Adicionar novo" href="<?= $this->url('navegacao',['controller' => $controller,'action' => 'cadastro'])?>">
                 Novo 
             </a>
+                <?php
+            }
+            ?>
             <span class="btn btn-default imprimir-cidade" title="Imprimir">
                 Imprimir 
             </span>            
@@ -45,8 +59,8 @@
                 Deseja realmente excluir?
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-danger" id="btn-cidade-excluir-confirm">Sim</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" title="Cancelar">Cancelar</button>
+                <button type="button" class="btn btn-danger" id="btn-cidade-excluir-confirm" title="Sim">Sim</button>
             </div>
         </div>
     </div>

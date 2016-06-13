@@ -37,7 +37,7 @@ class GeradorController extends AbstractEstruturaController {
         $gerador = new Gerador($mapa);
         $gerador->gerar();
 
-        $this->addSuccessMessage('Gerado com sucesso');
+        $this->addSuccessMessage('Crud gerado com sucesso. Habilite o módulo "' . $id . '" no \config\application.config.php');
 
         return $this->redirect()->toRoute('gerador-home');
     }

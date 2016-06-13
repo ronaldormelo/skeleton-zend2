@@ -9,7 +9,7 @@ return [
     ],
     'nome_projeto' => 'MC Network',
     'slogan' => 'Cursos On-line',
-    'tema' => 3,
+    'tema' => 19,
     'general' => [
         'arquivos' => BASE_PATCH . '/data/arquivos/',
     ],

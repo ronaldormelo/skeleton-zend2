@@ -19,4 +19,4 @@ $(function () {
             $('#{{controller}}-pagination').html(data);
         }
     });
-})
+});

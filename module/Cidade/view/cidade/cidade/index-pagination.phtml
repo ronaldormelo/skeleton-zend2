@@ -43,7 +43,7 @@
                                 <?php
                                 if (!is_null($campoFilter)) {
                                     ?>
-                                    <input type="search" placeholder="" class="tablesorter-filter" data-column="<?= $key ?>" value="<?= isset($filter[$key]) ? $filter[$key] : '' ?>">
+                                    <input type="search" title="Digite um termo para busca" placeholder="" class="tablesorter-filter" data-column="<?= $key ?>" value="<?= isset($filter[$key]) ? $filter[$key] : '' ?>">
                                     <?php
                                 } else {
                                     ?>
@@ -61,7 +61,17 @@
                         ?>
                         <tr>
                             <td class="text-center"><?= $pagina['nm_cidade']?></td>
-                                <td class="text-center"><span class="btn-group cidade-acoes-group" style="width: 140px;"><?= \Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro', 'id' => Estrutura\Helpers\Cript::enc($pagina['id_cidade'])))) ?><?= \Estrutura\Service\HtmlHelper::botaoExcluirConfirm(Estrutura\Helpers\Cript::enc($pagina['id_cidade'])) ?></span></td>                            
+                                <td class="text-center"><span class="btn-group cidade-acoes-group" style="width: 140px;"><?php 
+                        if ($this->layout()->acl->hasResource($controller . '/edita') && 
+                        $this->layout()->acl->isAllowed($this->layout()->role, $controller . '/edita')) { 
+                        ?><?= \Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao', array('controller' => $controller, 'action' => 'edita', 'id' => Estrutura\Helpers\Cript::enc($pagina['id_cidade'])))) ?><?php 
+                        } 
+                        ?><?php 
+                        if ($this->layout()->acl->hasResource($controller . '/excluir') && 
+                        $this->layout()->acl->isAllowed($this->layout()->role, $controller . '/excluir')) { 
+                        ?><?= \Estrutura\Service\HtmlHelper::botaoExcluirConfirm(Estrutura\Helpers\Cript::enc($pagina['id_cidade'])) ?><?php 
+                        } 
+                        ?></span></td>                            
                         </tr>                    
                         <?php
                     }

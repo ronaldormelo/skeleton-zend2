@@ -1,0 +1,49 @@
+<div class="container-fluid">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+
+        <a class="navbar-brand" href="<?= $this->Config('dominio') ?>" title="<?= $this->Config('slogan') ?>" style="padding-top: 0px;">
+            <img src="/assets/img/logo/logo-menu.png" />
+        </a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+        <?php if ($this->Auth()) { ?>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/mcnetwork-index/index" style="cursor: default">
+                        <?= ucwords($this->Auth()->nm_usuario); ?>    
+                    </a>
+                </li>
+                <!--                <li class="dropdown">
+                                    <a href="/mcnetwork-index/index">
+                                        <span class="glyphicon glyphicon glyphicon-home"></span> <?= $this->Auth()->id_perfil == 3 ? 'ÁREA DO ALUNO' : 'ÁREA DO ALUNO' ?>
+                                    </a>
+                                </li>-->
+                <li class="dropdown">
+                    <a href="<?= $this->url('logoff') ?>">
+                        <span class="glyphicon glyphicon-log-out"></span> Sair
+                    </a>
+                </li>
+            </ul>
+
+        <?php } else { ?>
+
+            <!--            <ul class="nav navbar-nav navbar-right">
+                            <li class="dropdown">
+                                <a href="/mcnetwork-index/index">
+                                    <span class="glyphicon glyphicon glyphicon-home"></span> ÁREA DO ALUNO
+                                </a>
+                            </li>
+                        </ul>-->
+        <?php } ?>
+    </div>
+
+</div>

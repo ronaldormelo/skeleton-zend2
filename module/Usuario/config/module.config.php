@@ -2,7 +2,7 @@
 
 return array(
     'router' => array(
-        'routes' => array(
+        'routes' => array(            
         ),
     ),
     'service_manager' => array(
@@ -18,9 +18,9 @@ return array(
         'locale' => 'en_US',
         'translation_file_patterns' => array(
             array(
-                'type' => 'gettext',
+                'type'     => 'gettext',
                 'base_dir' => __DIR__ . '/../language',
-                'pattern' => '%s.mo',
+                'pattern'  => '%s.mo',
                 'text_domain' => __NAMESPACE__, // Sem isso, o textDomain, usado pelo Zend\I18n\Translator\Translator fica 'default' e como o 'default' já foi definido quando foi adicionado no Application/config/module.config.php há um conflito e fica prevalecendo o do modulo Application
             ),
         ),
@@ -47,14 +47,14 @@ return array(
             array(
                 'label' => 'Usuario',
                 'route' => 'navegacao',
-                'controller' => 'usuario',
-                //'resource' => 'usuario/index',
+                'controller' => 'usuario',      
+                'resource' => 'usuario/index',
                 'pages' => array(
                     array(
                         'label' => 'Listar',
                         'route' => 'navegacao',
                         'controller' => 'usuario',
-                       // 'resource' => 'usuario/index',
+                        'resource' => 'usuario/index',
                     ),
                     array(
                         'label' => 'Novo',

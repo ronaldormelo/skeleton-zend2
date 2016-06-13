@@ -1,7 +1,7 @@
 <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css" >  
 <div class="cl-mcont">
     <?php
-    $form->setAttribute('action', $this->url('navegacao', array('controller' => $controller, 'action' => 'gravar')));
+    $form->setAttribute('action', $this->url('navegacao', array('controller'=>$controller,'action' => 'gravar')));
     $form->setAttribute('method', 'post');
     $form->setAttribute('class', 'form-horizontal');
     $form->setAttribute('data-toggle', 'validator');
@@ -13,108 +13,104 @@
             <h4>Cadastro</h4>
         </div>
         <div class="col-md-6 text-right">
-            <button type="submit" class="btn btn-primary">Salvar</button>
-            <a href="<?= $this->url('navegacao', ['controller' => $controller]) ?>" class="btn btn-default">Voltar</a>
+            <button type="submit" class="btn btn-primary" title="Salvar">Salvar</button>
+            <a href="<?=$this->url('navegacao', ['controller'=>$controller])?>" class="btn btn-default" title="Voltar">Voltar</a>
         </div>
     </div>
     <div class="block-flat">
         <div class="content">
             <div class="form-group">
                 <div class="col-md-7 text-right">
-                    <h6 class="text-danger">* = Campo obrigatório</h6>
+                    <h6 class="text-danger">* = Campos obrigatórios</h6>
                 </div>
                 <div class="col-md-5">
                 </div>
             </div>
             <?php
-            $form->get('id')->setValue(Estrutura\Helpers\Cript::enc($form->get('id')->getValue()));
+            $form->get('id')->setValue(Estrutura\Helpers\Cript::enc($form->get('id')->getValue())); 
             echo $this->formHidden($form->get('id'));
             ?>
-            <div class="form-group">
-                <div class="col-md-7">
-                    <?= $this->formRow($form->get('nm_usuario')) ?>
-                    <div class="help-block with-errors"></div>
-                </div>
-            </div>
-
-            <?php
-            if ($form->get('dt_nascimento')->getValue()) {
-                $form->get('dt_nascimento')->setValue((new \DateTime($form->get('dt_nascimento')->getValue()))->format('d/m/Y'));
-            }
-            ?>
-            <div class="form-group">
-                <div class="col-md-7">
-                    <?= $this->formLabel($form->get('dt_nascimento')) ?>
-                    <div class="input-group" id="datetimepicker">
-                        <?= $this->formInput($form->get('dt_nascimento')) ?>
-                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>                            
+                <div class="form-group">
+                        <div class="col-md-7">
+                            <?=$this->formRow($form->get('nm_usuario'))?>
+                            <div class="help-block with-errors"></div>
+                        </div>
                     </div>
-                    <div class="help-block with-errors"></div>
-                </div>
-            </div><div class="form-group">
-                <div class="col-md-7">
-                    <?= $this->formRow($form->get('nu_rg')) ?>
-                    <div class="help-block with-errors"></div>
-                </div>
-            </div><div class="form-group">
-                <div class="col-md-7">
-                    <?= $this->formRow($form->get('nu_cpf')) ?>
-                    <div class="help-block with-errors"></div>
-                </div>
-            </div><div class="form-group">
-                <div class="col-md-7">
-                    <?= $this->formRow($form->get('nm_profissao')) ?>
-                    <div class="help-block with-errors"></div>
-                </div>
-            </div><div class="form-group">
-                <div class="col-md-7">
-                    <?= $this->formRow($form->get('nm_nacionalidade')) ?>
-                    <div class="help-block with-errors"></div>
-                </div>
-            </div><div class="form-group">
-                <div class="col-md-7">
-                    <?= $this->formRow($form->get('id_sexo')) ?>
-                    <div class="help-block with-errors"></div>
-                </div>
-            </div><div class="form-group">
-                <div class="col-md-7">
-                    <?= $this->formRow($form->get('id_estado_civil')) ?>
-                    <div class="help-block with-errors"></div>
-                </div>
-            </div><div class="form-group">
-                <div class="col-md-7">
-                    <?= $this->formRow($form->get('id_tipo_usuario')) ?>
-                    <div class="help-block with-errors"></div>
-                </div>
-            </div><div class="form-group">
-                <div class="col-md-7">
-                    <?= $this->formRow($form->get('id_situacao_usuario')) ?>
-                    <div class="help-block with-errors"></div>
-                </div>
-            </div><div class="form-group">
-                <div class="col-md-7">
-                    <?= $this->formRow($form->get('id_email')) ?>
-                    <div class="help-block with-errors"></div>
-                </div>
-            </div><div class="form-group">
-                <div class="col-md-7">
-                    <?= $this->formRow($form->get('id_telefone')) ?>
-                    <div class="help-block with-errors"></div>
-                </div>
-            </div><div class="form-group">
-                <div class="col-md-7">
-                    <?= $this->formRow($form->get('id_endereco')) ?>
-                    <div class="help-block with-errors"></div>
-                </div>
-            </div>
+                    
+                    <?php
+                    if ($form->get('dt_nascimento')->getValue()) {
+                        $form->get('dt_nascimento')->setValue((new \DateTime($form->get('dt_nascimento')->getValue()))->format('d/m/Y'));
+                    }
+                    ?>
+                    <div class="form-group">
+                        <div class="col-md-7">
+                            <?= $this->formLabel($form->get('dt_nascimento')) ?>
+                            <div class="input-group" id="datetimepicker">
+                                <?= $this->formInput($form->get('dt_nascimento')) ?>
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>                            
+                            </div>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div><div class="form-group">
+                        <div class="col-md-7">
+                            <?=$this->formRow($form->get('nu_rg'))?>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div><div class="form-group">
+                        <div class="col-md-7">
+                            <?=$this->formRow($form->get('nu_cpf'))?>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div><div class="form-group">
+                        <div class="col-md-7">
+                            <?=$this->formRow($form->get('nm_profissao'))?>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div><div class="form-group">
+                        <div class="col-md-7">
+                            <?=$this->formRow($form->get('nm_nacionalidade'))?>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div><div class="form-group">
+                        <div class="col-md-7">
+                            <?=$this->formRow($form->get('id_sexo'))?>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div><div class="form-group">
+                        <div class="col-md-7">
+                            <?=$this->formRow($form->get('id_estado_civil'))?>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div><div class="form-group">
+                        <div class="col-md-7">
+                            <?=$this->formRow($form->get('id_tipo_usuario'))?>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div><div class="form-group">
+                        <div class="col-md-7">
+                            <?=$this->formRow($form->get('id_situacao_usuario'))?>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div><div class="form-group">
+                        <div class="col-md-7">
+                            <?=$this->formRow($form->get('id_email'))?>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div><div class="form-group">
+                        <div class="col-md-7">
+                            <?=$this->formRow($form->get('id_telefone'))?>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div><div class="form-group">
+                        <div class="col-md-7">
+                            <?=$this->formRow($form->get('id_endereco'))?>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
             <div class="row">
                 <div class="col-md-12 text-right">
-                    <button type="submit" class="btn btn-primary">
-                        Salvar
-                    </button>
-                    <a href="<?= $this->url('navegacao', ['controller' => $controller]) ?>" class="btn btn-default">
-                        Voltar
-                    </a>
+                    <button type="submit" class="btn btn-primary" title="Slavar">Salvar</button>
+                    <a href="<?=$this->url('navegacao', ['controller'=>$controller])?>" class="btn btn-default" title="Voltar">Voltar</a>
                 </div>
             </div>
         </div>

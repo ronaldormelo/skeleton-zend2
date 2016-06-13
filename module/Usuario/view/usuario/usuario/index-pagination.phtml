@@ -53,7 +53,7 @@
                                 <?php
                                 if (!is_null($campoFilter)) {
                                     ?>
-                                    <input type="search" placeholder="" class="tablesorter-filter" data-column="<?= $key ?>" value="<?= isset($filter[$key]) ? $filter[$key] : '' ?>">
+                                    <input type="search" title="Digite um termo para busca" placeholder="" class="tablesorter-filter" data-column="<?= $key ?>" value="<?= isset($filter[$key]) ? $filter[$key] : '' ?>">
                                     <?php
                                 } else {
                                     ?>
@@ -76,7 +76,17 @@
                                 <td class="text-center"><?= $pagina['nu_cpf'] ? \Estrutura\Helpers\Cpf::cpfMask($pagina['nu_cpf']) : null ?></td>
                                 <td class="text-center"><?= $pagina['nm_profissao']?></td>
                                 <td class="text-center"><?= $pagina['nm_nacionalidade']?></td>
-                                <td class="text-center"><span class="btn-group usuario-acoes-group" style="width: 140px;"><?= \Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro', 'id' => Estrutura\Helpers\Cript::enc($pagina['id_usuario'])))) ?><?= \Estrutura\Service\HtmlHelper::botaoExcluirConfirm(Estrutura\Helpers\Cript::enc($pagina['id_usuario'])) ?></span></td>                            
+                                <td class="text-center"><span class="btn-group usuario-acoes-group" style="width: 140px;"><?php 
+                        if ($this->layout()->acl->hasResource($controller . '/edita') && 
+                        $this->layout()->acl->isAllowed($this->layout()->role, $controller . '/edita')) { 
+                        ?><?= \Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao', array('controller' => $controller, 'action' => 'edita', 'id' => Estrutura\Helpers\Cript::enc($pagina['id_usuario'])))) ?><?php 
+                        } 
+                        ?><?php 
+                        if ($this->layout()->acl->hasResource($controller . '/excluir') && 
+                        $this->layout()->acl->isAllowed($this->layout()->role, $controller . '/excluir')) { 
+                        ?><?= \Estrutura\Service\HtmlHelper::botaoExcluirConfirm(Estrutura\Helpers\Cript::enc($pagina['id_usuario'])) ?><?php 
+                        } 
+                        ?></span></td>                            
                         </tr>                    
                         <?php
                     }

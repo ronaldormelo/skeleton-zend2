@@ -30,8 +30,6 @@ class GeradorColuna extends \Gerador\Entity\GeradorColuna {
         $tratado = [];
         foreach ($lista as $item) {
 
-
-
             if (
                     ($item->getTableSchema() == $this->getTableSchema()) &&
                     ($item->getTableName() == $this->getTableName())) {
@@ -47,7 +45,7 @@ class GeradorColuna extends \Gerador\Entity\GeradorColuna {
      * @return type
      */
     public function getConfigDb() {
-        
+
         if (!$this->config) {
             $gerador = require(BASE_PATCH . '/config/autoload/gerador.php');
             $this->setTableSchema($gerador['database']);

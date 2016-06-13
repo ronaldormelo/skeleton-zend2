@@ -6,9 +6,16 @@
             <h4>{{nome}}</h4>
         </div>
         <div class="col-md-6 text-right">
+            <?php
+            if ($this->layout()->acl->hasResource($controller . '/cadastro') &&
+                    $this->layout()->acl->isAllowed($this->layout()->role, $controller . '/cadastro')) {
+                ?>
             <a class="btn btn-primary" title="Adicionar novo" href="<?= $this->url('navegacao',['controller' => $controller,'action' => 'cadastro'])?>">
                 Novo 
             </a>
+                <?php
+            }
+            ?>
             <span class="btn btn-default" title="Imprimir" id="imprimir-{{controller}}">
                 Imprimir 
             </span>
@@ -20,9 +27,16 @@
         <div class="col-md-6">            
         </div>
         <div class="col-md-6 text-right">
+            <?php
+            if ($this->layout()->acl->hasResource($controller . '/cadastro') &&
+                    $this->layout()->acl->isAllowed($this->layout()->role, $controller . '/cadastro')) {
+                ?>
             <a class="btn btn-primary" title="Adicionar novo" href="<?= $this->url('navegacao',['controller' => $controller,'action' => 'cadastro'])?>">
                 Novo 
             </a>
+                <?php
+            }
+            ?>
             <span class="btn btn-default imprimir-{{controller}}" title="Imprimir">
                 Imprimir 
             </span>            

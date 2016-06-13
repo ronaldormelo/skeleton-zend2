@@ -88,6 +88,11 @@ class CidadeController extends AbstractCrudController
     {
         return parent::cadastro($this->getServiceObj(), $this->getFormObj());
     }
+    
+    public function editaAction()
+    {
+        return parent::cadastro($this->getServiceObj(), $this->getFormObj());
+    }
 
     public function excluirAction()
     {

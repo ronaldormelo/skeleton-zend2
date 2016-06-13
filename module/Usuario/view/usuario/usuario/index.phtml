@@ -1,12 +1,3 @@
-<?php
-
-
-        echo '<pre>';
-        print_r($this->view);
-        exit();
-
-?>
-
 <link rel="stylesheet" href="/assets/compact-css/jquery.tablesorter.theme.bootstrap.css,jquery.tablesorter.pager.css">
 <script src="/assets/compact-js/usuario|usuario|index.js" type="text/javascript"></script>
 <div class="cl-mcont">
@@ -15,26 +6,40 @@
             <h4>Usuario</h4>
         </div>
         <div class="col-md-6 text-right">
-            <a class="btn btn-primary" title="Adicionar novo" href="<?= $this->url('navegacao', ['controller' => $controller, 'action' => 'cadastro']) ?>">
+            <?php
+            if ($this->layout()->acl->hasResource($controller . '/cadastro') &&
+                    $this->layout()->acl->isAllowed($this->layout()->role, $controller . '/cadastro')) {
+                ?>
+            <a class="btn btn-primary" title="Adicionar novo" href="<?= $this->url('navegacao',['controller' => $controller,'action' => 'cadastro'])?>">
                 Novo 
             </a>
+                <?php
+            }
+            ?>
             <span class="btn btn-default" title="Imprimir" id="imprimir-usuario">
                 Imprimir 
             </span>
-        </div>
+        </div>    
     </div>
     <br>
     <div class="row" id="usuario-pagination"></div>
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-6">            
         </div>
         <div class="col-md-6 text-right">
+            <?php
+            if ($this->layout()->acl->hasResource($controller . '/cadastro') &&
+                    $this->layout()->acl->isAllowed($this->layout()->role, $controller . '/cadastro')) {
+                ?>
             <a class="btn btn-primary" title="Adicionar novo" href="<?= $this->url('navegacao',['controller' => $controller,'action' => 'cadastro'])?>">
                 Novo 
             </a>
-            <span class="btn btn-default" title="Imprimir" id="imprimir-usuario">
+                <?php
+            }
+            ?>
+            <span class="btn btn-default imprimir-usuario" title="Imprimir">
                 Imprimir 
-            </span>
+            </span>            
         </div>
     </div>
 </div>
@@ -48,14 +53,14 @@
                     <span aria-hidden="true">&times;</span>
                     <span class="sr-only">Fechar</span>
                 </button>
-                <h4 class="modal-title">Confirme Exclusão</h4>
+                <h4 class="modal-title">Confirmar Exclusão</h4>
             </div>
             <div class="modal-body">
                 Deseja realmente excluir?
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-danger" id="btn-usuario-excluir-confirm">Sim</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" title="Cancelar">Cancelar</button>
+                <button type="button" class="btn btn-danger" id="btn-usuario-excluir-confirm" title="Sim">Sim</button>
             </div>
         </div>
     </div>

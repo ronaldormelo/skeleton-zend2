@@ -2,7 +2,6 @@
 
 namespace Gerador\Service;
 
-use Zend\Db\Adapter\Adapter;
 use Zend\Db\Sql\Select;
 use Zend\Db\Sql\TableIdentifier;
 
@@ -17,7 +16,7 @@ class GeradorTabela extends \Gerador\Entity\GeradorTabela {
 
         $select = new Select();
         $select->from(new TableIdentifier(
-            $this->getTable()->table, 'INFORMATION_SCHEMA' 
+                $this->getTable()->table, 'INFORMATION_SCHEMA'
         ));
         $select->columns($this->getTable()->getColumns());
         $select->where($where);
@@ -40,7 +39,7 @@ class GeradorTabela extends \Gerador\Entity\GeradorTabela {
      * @return type
      */
     public function getConfigDb() {
-        
+
         if (!$this->config) {
             $gerador = require(BASE_PATCH . '/config/autoload/gerador.php');
             $this->setTableSchema($gerador['database']);
@@ -48,6 +47,16 @@ class GeradorTabela extends \Gerador\Entity\GeradorTabela {
         }
 
         return $this->config;
+    }
+    
+    /**
+     * 
+     * @return type
+     */
+    public function setConfigDb() {
+
+        self::$adapter = NULL;
+        $this->config = \Estrutura\Service\ConfigService::getConfig('db');
     }
 
 }

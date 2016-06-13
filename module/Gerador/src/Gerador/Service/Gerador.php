@@ -3,6 +3,7 @@
 namespace Gerador\Service;
 
 use Estrutura\Helpers\String;
+use Gerador\Service\GeradorColuna;
 
 class Gerador {
 
@@ -24,6 +25,7 @@ class Gerador {
             $this->gerarServices($nameSpace, $tabela, $campos);
             $this->gerarForms($nameSpace, $tabela, $campos);
             $this->gerarControllers($nameSpace, $tabela, $campos);
+            $this->gerarScript($nameSpace, $tabela, $campos);
         }
 
         foreach ($this->controllers as $nameSpace => $item) {
@@ -36,9 +38,18 @@ class Gerador {
 
             $this->gerarConfigNameSpace($nameSpace, $string);
         }
+
+        //Limpa Cache
+        $directory = BASE_PATCH . '/data/cache/';
+        $files = array_diff(scandir($directory), array('.', '..'));
+
+        foreach ($files as $file) {
+            (is_dir("$directory/$file")) ? \Estrutura\Helpers\Arquivo::delTree("$directory/$file") : unlink("$directory/$file");
+        }
     }
 
     public function gerarTable($nameSpace, $tabela, $campos) {
+
         $stringCampos = $this->gerarTabelaCampos($campos);
         $modelo = $this->getModelo('Table');
         $classe = $this->getClasseName($nameSpace, $tabela);
@@ -86,7 +97,6 @@ class Gerador {
                 $string .= "        " . 'protected $' . "{$item->getColumnName()}; \r\n";
             }
         }
-
         return $string;
     }
 
@@ -434,7 +444,7 @@ class Gerador {
 
         /// Cadastro
         $modelo = $this->getModelo('Cadastro');
-        $stringCampos = $this->gerarCadastroCampos($campos);
+        $stringCampos = $this->gerarCampos($campos);
         $arquivo = $this->tratarModelo([
             'campos' => $stringCampos,
             'namespace' => String::underscore2Camelcase($nameSpace),
@@ -443,6 +453,20 @@ class Gerador {
             'route' => strtolower($nameSpace)], $modelo);
 
         $this->escreverArquivo($location . '/cadastro.phtml', $arquivo);
+
+        $this->controllers[$nameSpace][] = $classe;
+
+        /// Edita
+        $modelo = $this->getModelo('Edita');
+        $stringCampos = $this->gerarCampos($campos);
+        $arquivo = $this->tratarModelo([
+            'campos' => $stringCampos,
+            'namespace' => String::underscore2Camelcase($nameSpace),
+            'classe' => $classe,
+            'controller' => $controller,
+            'route' => strtolower($nameSpace)], $modelo);
+
+        $this->escreverArquivo($location . '/edita.phtml', $arquivo);
 
         $this->controllers[$nameSpace][] = $classe;
 
@@ -465,8 +489,17 @@ class Gerador {
         $arquivo = $this->tratarModelo([
             'ScriptJs' => $this->gerarCadastroJS($campos)
                 ], $modelo);
-
         $this->escreverArquivo($location . '/cadastro.js', $arquivo);
+
+        /// Edita.js
+        $modelo = $this->getModelo('Edita.Js');
+
+        $arquivo = $this->tratarModelo([
+            'ScriptJs' => $this->gerarCadastroJS($campos)
+                ], $modelo);
+
+        $this->escreverArquivo($location . '/edita.js', $arquivo);
+
         /// IndexPagination.js
         $modelo = $this->getModelo('IndexPagination.Js');
 
@@ -478,6 +511,54 @@ class Gerador {
                 ], $modelo);
 
         $this->escreverArquivo($location . '/index-pagination.js', $arquivo);
+    }
+
+    private function gerarScript($nameSpace, $tabela, $campos) {
+
+        $service = new \Gerador\Service\GeradorTabela();
+        $service->setConfigDb();
+        $adapter = $service->getAdapter();
+
+        $sql = "SELECT id_controller FROM controller WHERE nm_controller = '" . $tabela . "'";
+        $result = $service->toArrayResult($adapter->query($sql, \Zend\Db\Adapter\Adapter::QUERY_MODE_EXECUTE));
+
+        if (count($result) == 0) {
+
+            $sql1 = "INSERT INTO controller (nm_controller) VALUES ('" . $tabela . "')";
+            $adapter->query($sql1, \Zend\Db\Adapter\Adapter::QUERY_MODE_EXECUTE);
+
+            $sql2 = "SELECT id_controller FROM controller WHERE nm_controller = '" . $tabela . "'";
+            $result = $service->toArrayResult($adapter->query($sql2, \Zend\Db\Adapter\Adapter::QUERY_MODE_EXECUTE));
+        }
+
+        $controller = current($result);
+
+        for ($i = 1; $i <= 6; $i++) {
+
+            $sql3 = "SELECT id_perfil_controller_action FROM perfil_controller_action WHERE id_controller = '" . $controller['id_controller'] . "' AND id_action = '" . $i . "'";
+
+            $perfilControllerAction = $adapter->query($sql3, \Zend\Db\Adapter\Adapter::QUERY_MODE_EXECUTE);
+
+            if (count($perfilControllerAction) == 0) {
+                $sql4 = "INSERT INTO perfil_controller_action (
+                    id_controller,
+                    id_action,
+                    id_perfil
+                ) 
+                VALUES
+                (" . $controller['id_controller'] . ", $i, 1)";
+
+                $adapter->query($sql4, \Zend\Db\Adapter\Adapter::QUERY_MODE_EXECUTE);
+            }
+        }
+        $modelo = $this->getModelo('Script');
+
+        $arquivo = $this->tratarModelo([
+            'tabela' => $tabela,
+            'id_controller' => $controller['id_controller'],
+                ], $modelo);
+
+        $this->escreverArquivo(BASE_PATCH . '/data/db/' . $tabela . '.sql', $arquivo);
     }
 
     private function folderView($namespace, $classe) {
@@ -494,7 +575,8 @@ class Gerador {
         return $view;
     }
 
-    private function folderJS($namespace, $classe) {
+    private
+            function folderJS($namespace, $classe) {
 
         $location = BASE_PATCH . '/public/assets/js/' . str_replace('_', '-', strtolower($namespace . '/' . String::camelcase2underscore($classe)));
 
@@ -502,21 +584,18 @@ class Gerador {
         if (!file_exists($location)) {
 
             mkdir($location, 0777, true);
-        }
-
-        return $location;
+        } return $location;
     }
 
-    private function getLocation($nameSpace, $tipo = false, $classe = '') {
+    private
+            function getLocation($nameSpace, $tipo = false, $classe = '') {
 
-        $gerador = require(BASE_PATCH . '/config/autoload/gerador.php');
+        $gerador = require( BASE_PATCH . '/config/autoload/gerador.php' );
 
         if (!$tipo) {
 
             return $gerador['location'] . String::underscore2Camelcase($nameSpace);
-        }
-
-        $caminho = $gerador['location'] . String::underscore2Camelcase($nameSpace) . '/src/' . String::underscore2Camelcase($nameSpace) . '/' . $tipo . '/';
+        } $caminho = $gerador['location'] . String::underscore2Camelcase($nameSpace) . '/src/' . String::underscore2Camelcase($nameSpace) . '/' . $tipo . '/';
         $dados = [
             'file' => $caminho . $classe . '.php',
             'folder' => $caminho
@@ -525,13 +604,14 @@ class Gerador {
         return $dados;
     }
 
-    private function gerarCadastroCampos($campos) {
+    private function gerarCampos($campos) {
         $string = '';
         /** @var $item \Gerador\Service\GeradorColuna */
         foreach ($campos as $item) {
 
             $comment = json_decode($item->getColumnComment(), true);
-            if (isset($comment['not_create']) && $comment['not_create'] == 'true') {
+            if (isset($comment[
+                            'not_create']) && $comment['not_create'] == 'true') {
 
                 continue;
             }
@@ -575,11 +655,12 @@ class Gerador {
         return $string;
     }
 
-    private function gerarCadastroJS($campos) {
+    private
+            function gerarCadastroJS($campos) {
         $string = '';
 
         $control = [];
-        /** @var $item \Gerador\Service\GeradorColuna */
+        /** @var $item \Gerad or\Service\GeradorColuna */
         foreach ($campos as $item) {
 
             $tipo = $this->getTypeForm($item);
@@ -610,8 +691,8 @@ class Gerador {
                 case 'password':
 
                     if (!array_key_exists('password', $control)) {
-
                         $control['password'] = true;
+
                         $string .= 'var optionsPwstrength = {};
                         optionsPwstrength.common = {
                             minChar: 8,
@@ -646,13 +727,13 @@ class Gerador {
         return $string;
     }
 
-    private function gerarIndexTh($campos) {
+    private
+            function gerarIndexTh($campos) {
         $string = '';
         /** @var $item \Gerador\Service\GeradorColuna */
         foreach ($campos as $item) {
 
-            if (strcasecmp($item->getDataType(), 'int') != 0 &&
-                    !(preg_match('/auto_increment/', $item->getExtra()))) {
+            if (strcasecmp($item->getDataType(), 'int') != 0 && !( preg_match('/auto_increment/', $item->getExtra()))) {
 
                 $comment = $label = json_decode($item->getColumnComment(), true);
                 if (isset($comment['label'])) {
@@ -668,7 +749,8 @@ class Gerador {
         return $string;
     }
 
-    private function gerarFilter($campos) {
+    private
+            function gerarFilter($campos) {
 
         $count = 0;
 
@@ -676,8 +758,7 @@ class Gerador {
         /** @var $item \Gerador\Service\GeradorColuna */
         foreach ($campos as $item) {
 
-            if (strcasecmp($item->getDataType(), 'int') != 0 &&
-                    !(preg_match('/auto_increment/', $item->getExtra()))) {
+            if (strcasecmp($item->getDataType(), 'int') != 0 && !( preg_match('/auto_increment/', $item->getExtra()))) {
 
                 $tipo = $this->getTypeForm($item);
                 switch ($tipo) {
@@ -738,7 +819,8 @@ class Gerador {
         return $string;
     }
 
-    private function gerarColumn($campos) {
+    private
+            function gerarColumn($campos) {
 
         $string = '';
         /** @var $item \Gerador\Service\GeradorColuna */
@@ -755,8 +837,7 @@ class Gerador {
         /** @var $item \Gerador\Service\GeradorColuna */
         foreach ($campos as $item) {
 
-            if (strcasecmp($item->getDataType(), 'int') != 0 &&
-                    !(preg_match('/auto_increment/', $item->getExtra()))) {
+            if (strcasecmp($item->getDataType(), 'int') != 0 && !( preg_match('/auto_increment/', $item->getExtra()))) {
 
                 $tipo = $this->getTypeForm($item);
                 switch ($tipo) {
@@ -789,16 +870,28 @@ class Gerador {
         }
 
         foreach ($campos as $item) {
-
-            if (strcasecmp($item->getDataType(), 'int') == 0 &&
-                    (preg_match('/auto_increment/', $item->getExtra()))) {
+            if (strcasecmp($item->getDataType(), 'int') == 0 && ( preg_match('/auto_increment/', $item->getExtra()))) {
 
                 $string .= '<td class="text-center">' .
                         '<span class="btn-group ' . $controller . '-acoes-group" style="width: 140px;">' .
+                        '<?php 
+                        if ($this->layout()->acl->hasResource($controller . \'/edita\') && 
+                        $this->layout()->acl->isAllowed($this->layout()->role, $controller . \'/edita\')) { 
+                        ?>' .
                         '<?= \Estrutura\Service\HtmlHelper::botaoAlterar(' .
-                        '$this->url(\'navegacao\', array(\'controller\' => $controller, \'action\' => \'cadastro\', \'id\' => Estrutura\Helpers\Cript::enc($pagina[\'' . $item->getColumnName() . '\'])))) ?>' .
+                        '$this->url(\'navegacao\', array(\'controller\' => $controller, \'action\' => \'edita\', \'id\' => Estrutura\Helpers\Cript::enc($pagina[\'' . $item->getColumnName() . '\'])))) ?>' .
+                        '<?php 
+                        } 
+                        ?>' .
+                        '<?php 
+                        if ($this->layout()->acl->hasResource($controller . \'/excluir\') && 
+                        $this->layout()->acl->isAllowed($this->layout()->role, $controller . \'/excluir\')) { 
+                        ?>' .
                         '<?= \Estrutura\Service\HtmlHelper::botaoExcluirConfirm(' .
                         'Estrutura\Helpers\Cript::enc($pagina[\'' . $item->getColumnName() . '\'])) ?>' .
+                        '<?php 
+                        } 
+                        ?>' .
                         '</span>' .
                         '</td>';
             }
@@ -807,14 +900,14 @@ class Gerador {
         return $string;
     }
 
-    private function getQtdCampos($campos) {
+    private
+            function getQtdCampos($campos) {
 
         $qtdCampos = 1;
         /** @var $item \Gerador\Service\GeradorColuna */
         foreach ($campos as $item) {
 
-            if (strcasecmp($item->getDataType(), 'int') != 0 &&
-                    !(preg_match('/auto_increment/', $item->getExtra()))) {
+            if (strcasecmp($item->getDataType(), 'int') != 0 && !( preg_match('/auto_increment/', $item->getExtra()))) {
 
                 $qtdCampos++;
             }

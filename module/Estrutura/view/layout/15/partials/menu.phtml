@@ -1,0 +1,72 @@
+<ul class="nav navbar-nav">
+    <?php
+    $i = 1;
+    foreach ($this->container as $page) {
+
+        if ($this->navigation('navigation')->accept($page)) {
+
+            $liClasses = array();
+            $liClass = '';
+
+            if ($page->isActive()) {
+
+                $liClasses[] = 'active';
+            }
+            if ($i == 1) {
+
+                $liClasses[] = 'first';
+            } elseif ($i == count($this->container)) {
+
+                $liClasses[] = 'last';
+            }
+            if (0 < count($liClasses)) {
+
+                $liClass = ' class="' . implode(' ', $liClasses) . '"';
+            }
+
+            if ($page->getChildren()) {
+                ?>
+                <li <?= $liClass ?>>
+                    <div class="btn-group dropdown">
+                        <a class="btn btn-default" href="<?= $page->getHref() ?>" >
+                            <?= $page->getLabel() ?>
+                        </a>
+                        <a class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            &nbsp;
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <?php
+                            $page->rewind();
+                            while ($page->valid()) {
+                                if ($this->navigation('navigation')->accept($page->current())) {
+                                    ?>
+                                    <li class="divider"></li>
+                                    <li>
+                                        <?= $this->navigation('navigation')->menu()->htmlify($page->current()) ?>
+                                    </li>
+                                    <?php
+                                }
+                                $page->next();
+                            }
+                            ?>
+                        </ul>
+                    </div>
+                </li>
+                <?php
+            } else {
+                ?>
+                <li <?= $liClass ?>>
+                    <div class="btn-group" ?> 
+                        <a class="btn btn-default" href="<?= $page->getHref() ?>" >
+                            <?= $page->getLabel() ?>
+                        </a>
+                    </div>
+                </li>
+                <?php
+            }
+        }
+        $i++;
+    }
+    ?>
+</ul>
